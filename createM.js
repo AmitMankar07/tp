@@ -1,1 +1,0 @@
-var abnem="some";fdbcdv
