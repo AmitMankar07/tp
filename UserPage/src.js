@@ -1,14 +1,24 @@
 const buttn=document.getElementById('butn');
 
+
+
 function clickHandler(event){
     event.preventDefault();
     console.log("event");
     const username=document.getElementById('name').value;
     const useremail=document.getElementById('email').value;
-    localStorage.setItem('UserNames',username);
-   
-    localStorage.setItem('UserEmailid',useremail);
+    const user = {
+        username,
+        useremail,
+      };
+    
+      
+      const userJson = JSON.stringify(user);
+    
+     
+      localStorage.setItem('User', userJson);
     }
+    
 buttn.addEventListener('click',clickHandler);
 
 
