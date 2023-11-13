@@ -5,9 +5,9 @@ function clickHandler(event){
     console.log("event");
     const username=document.getElementById('name').value;
     const useremail=document.getElementById('email').value;
-    localStorage.setItem('UserName',username);
+    localStorage.setItem('UserNames',username);
    
-    localStorage.setItem('UserEmail',useremail);
+    localStorage.setItem('UserEmailid',useremail);
     }
 buttn.addEventListener('click',clickHandler);
 
