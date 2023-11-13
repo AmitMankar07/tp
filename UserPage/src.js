@@ -1,4 +1,5 @@
 const buttn=document.getElementById('butn');
+
 function clickHandler(event){
     event.preventDefault();
     console.log("event");
