@@ -17,9 +17,6 @@ function addItem(e){
 
     li.appendChild(document.createTextNode(newItem));
 
-   
-    
-
      //edit button
      var editbutn=document.createElement('button');
      editbutn.className="btn btn-danger btn-sm float-right Edit";
