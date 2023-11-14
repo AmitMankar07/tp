@@ -2,7 +2,7 @@ var buttn=document.getElementById('butn');
 var itemList=document.getElementById('users');
 
 buttn.addEventListener('click',clickHandler);
-itemList.addEventListener('click',addItems);
+itemList.addEventListener('click',removeItem);
 
 function clickHandler(event){
     event.preventDefault();
@@ -19,32 +19,26 @@ function clickHandler(event){
 
       localStorage.setItem(useremail, userJson);
 
+        //new item
       var newItem=username+"-"+useremail+"-"+usernumber;
       const li = document.createElement('li');
       li.className = 'items';
       li.appendChild(document.createTextNode(newItem));
-    
+      
+      //delete butn
+      var delbtn=document.createElement('button');
+      delbtn.className="delete float-right";
+      delbtn.appendChild(document.createTextNode('delete'));
+      li.appendChild(delbtn);
+
       itemList.appendChild(li);
+  
     }
-
-  //   function addItems(e){
-  //     e.preventDefault();
-  //      // Retrieve the users list from the local storage.
-  // const users = JSON.parse(localStorage.getItem('Users') || []);
-
-  // // Clear the existing users list.
-  // itemList.innerHTML = '';
-
-  // // Iterate over the users list and display the user details in a list.
-  //   for (const user of users) {
-  //   const li = document.createElement('li');
-  //   li.className = 'items';
-  //   li.appendChild(document.createTextNode((user.username)+"-"+(user.useremail)+"-"+(user.usernumber)));
-
-  //   itemList.appendChild(li);
-  //   }
-  
-   
-  //  }
-  
-  
+    function removeItem(e){
+      if(e.target.classList.contains('delete')){
+        if(confirm('Are you sure?')){
+            var li=e.target.parentElement;
+            itemList.removeChild(li);
+        }
+    }
+    }
