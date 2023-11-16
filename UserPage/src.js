@@ -3,6 +3,7 @@ var itemList=document.getElementById('users');
 
 buttn.addEventListener('click',clickHandler);
 itemList.addEventListener('click',removeItem);
+itemList.addEventListener('click',editItem);
 
 function clickHandler(event){
     event.preventDefault();
@@ -31,6 +32,12 @@ function clickHandler(event){
       delbtn.appendChild(document.createTextNode('delete'));
       li.appendChild(delbtn);
 
+      //edit buutn
+      var editbutn=document.createElement('button');
+      editbutn.className="edit float-right";
+      editbutn.appendChild(document.createTextNode('edit'));
+      li.appendChild(editbutn);
+
       itemList.appendChild(li);
   
     }
@@ -41,4 +48,21 @@ function clickHandler(event){
             itemList.removeChild(li);
         }
     }
+    }
+
+    function editItem(e){
+      if(e.target.classList.contains('edit')){
+         
+    const listItem = e.target.parentElement;
+    const userText = listItem.textContent;
+    const [username, userEmail, userNumber] = userText.split('-');
+
+    localStorage.removeItem(userEmail);
+    
+    document.getElementById('name').value = username;
+    document.getElementById('email').value = userEmail;
+    document.getElementById('Phone').value = userNumber;
+
+    itemList.removeChild(listItem);
+      }
     }
