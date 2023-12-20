@@ -11,7 +11,7 @@ itemList.addEventListener('click',editItem);
 document.addEventListener('DOMContentLoaded', retrieveData);
 
 function retrieveData() {
-  axios.get("https://crudcrud.com/api/8db886396f91445eab9dc631834e5a36/appointmentData")
+  axios.get("https://crudcrud.com/api/91c69c91db9444bd8a376890c4db334f/appointmentData")
     .then((response) => {
       response.data.forEach((user) => {
         addItemToList(user.username, user.useremail, user.usernumber,user._id);
@@ -60,7 +60,7 @@ function clickHandler(event){
       const userJson = JSON.stringify(user);
 
       //post data into the crud server
-      axios.post("https://crudcrud.com/api/8db886396f91445eab9dc631834e5a36/appointmentData",user)
+      axios.post("https://crudcrud.com/api/91c69c91db9444bd8a376890c4db334f/appointmentData",user)
       .then((response)=>{
         console.log(response)
       })
@@ -100,7 +100,7 @@ function clickHandler(event){
         if(confirm('Are you sure?')){
             var li=e.target.parentElement;
             var userId=li.id;
-            axios.delete(`https://crudcrud.com/api/8db886396f91445eab9dc631834e5a36/appointmentData/${userId}`)
+            axios.delete(`https://crudcrud.com/api/91c69c91db9444bd8a376890c4db334f/appointmentData/${userId}`)
         .then((response) => {
           console.log(response);
           
@@ -120,13 +120,18 @@ function clickHandler(event){
     const listItem = e.target.parentElement;
     const userText = listItem.textContent;
     const [username, userEmail, userNumber] = userText.split('-');
-
-    localStorage.removeItem(userEmail);
+        const userId=listItem.id;
     
-    document.getElementById('name').value = username;
-    document.getElementById('email').value = userEmail;
-    document.getElementById('Phone').value = userNumber;
-
-    itemList.removeChild(listItem);
+        axios.delete(`https://crudcrud.com/api/91c69c91db9444bd8a376890c4db334f/appointmentData/${userId}`)
+        .then((response) => {
+          console.log(response);
+          itemList.removeChild(listItem);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+        document.getElementById('name').value = username;
+        document.getElementById('email').value = userEmail;
+        document.getElementById('Phone').value = userNumber;
       }
     }
