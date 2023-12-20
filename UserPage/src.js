@@ -8,6 +8,43 @@ buttn.addEventListener('click',clickHandler);
 itemList.addEventListener('click',removeItem);
 itemList.addEventListener('click',editItem);
 
+document.addEventListener('DOMContentLoaded', retrieveData);
+
+function retrieveData() {
+  axios.get("https://crudcrud.com/api/8db886396f91445eab9dc631834e5a36/appointmentData")
+    .then((response) => {
+      response.data.forEach((user) => {
+        addItemToList(user.username, user.useremail, user.usernumber);
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}
+
+function addItemToList(username, useremail, usernumber) {
+  var newItem = username + "-" + useremail + "-" + usernumber;
+  const li = document.createElement('li');
+  li.className = 'items';
+  li.appendChild(document.createTextNode(newItem));
+  
+   //delete butn
+  var delbtn=document.createElement('button');
+  delbtn.className="delete float-right";
+  delbtn.appendChild(document.createTextNode('delete'));
+  li.appendChild(delbtn);
+
+  //edit buutn
+  var editbutn=document.createElement('button');
+  editbutn.className="edit float-right";
+  editbutn.appendChild(document.createTextNode('edit'));
+  li.appendChild(editbutn);
+
+  
+  itemList.appendChild(li);
+}
+
+
 function clickHandler(event){
     event.preventDefault();
     console.log("event");
@@ -20,16 +57,20 @@ function clickHandler(event){
         usernumber
       };
       const userJson = JSON.stringify(user);
-      axios.post("https://crudcrud.com/api/f69b1fcec06e4e0f82837364f051816d/appointmentData",user)
-      .then((respone)=>{
-        // showNewUserOnScreen(respone.data)
-        console.log(respone)
+
+      //post data into the crud server
+      axios.post("https://crudcrud.com/api/8db886396f91445eab9dc631834e5a36/appointmentData",user)
+      .then((response)=>{
+        console.log(response)
       })
       .catch(err=>{
         console.log(err);
       })
-      //localStorage.setItem(useremail, userJson);
 
+      //get data from the crud
+      
+      //localStorage.setItem(useremail, userJson);
+      
         //new item
       var newItem=username+"-"+useremail+"-"+usernumber;
       const li = document.createElement('li');
@@ -51,6 +92,8 @@ function clickHandler(event){
       itemList.appendChild(li);
   
     }
+   
+    
     function removeItem(e){
       if(e.target.classList.contains('delete')){
         if(confirm('Are you sure?')){
