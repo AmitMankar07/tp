@@ -14,7 +14,7 @@ function retrieveData() {
   axios.get("https://crudcrud.com/api/8db886396f91445eab9dc631834e5a36/appointmentData")
     .then((response) => {
       response.data.forEach((user) => {
-        addItemToList(user.username, user.useremail, user.usernumber);
+        addItemToList(user.username, user.useremail, user.usernumber,user._id);
       });
     })
     .catch(err => {
@@ -22,9 +22,10 @@ function retrieveData() {
     });
 }
 
-function addItemToList(username, useremail, usernumber) {
+function addItemToList(username, useremail, usernumber,userId) {
   var newItem = username + "-" + useremail + "-" + usernumber;
   const li = document.createElement('li');
+  li.id=userId;
   li.className = 'items';
   li.appendChild(document.createTextNode(newItem));
   
@@ -98,7 +99,17 @@ function clickHandler(event){
       if(e.target.classList.contains('delete')){
         if(confirm('Are you sure?')){
             var li=e.target.parentElement;
-            itemList.removeChild(li);
+            var userId=li.id;
+            axios.delete(`https://crudcrud.com/api/8db886396f91445eab9dc631834e5a36/appointmentData/${userId}`)
+        .then((response) => {
+          console.log(response);
+          
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+        itemList.removeChild(li);
+       
         }
     }
     }
