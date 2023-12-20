@@ -1,6 +1,9 @@
 var buttn=document.getElementById('butn');
 var itemList=document.getElementById('users');
 
+let x=2;
+console.log("hello");
+
 buttn.addEventListener('click',clickHandler);
 itemList.addEventListener('click',removeItem);
 itemList.addEventListener('click',editItem);
@@ -17,8 +20,15 @@ function clickHandler(event){
         usernumber
       };
       const userJson = JSON.stringify(user);
-
-      localStorage.setItem(useremail, userJson);
+      axios.post("https://crudcrud.com/api/f69b1fcec06e4e0f82837364f051816d/appointmentData",user)
+      .then((respone)=>{
+        // showNewUserOnScreen(respone.data)
+        console.log(respone)
+      })
+      .catch(err=>{
+        console.log(err);
+      })
+      //localStorage.setItem(useremail, userJson);
 
         //new item
       var newItem=username+"-"+useremail+"-"+usernumber;
