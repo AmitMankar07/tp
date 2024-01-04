@@ -9,23 +9,13 @@ productList.addEventListener('click',editItem);
 
 document.addEventListener('DOMContentLoaded', retrieveData);
 
-// function retrieveData() {
-//   axios.get("https://crudcrud.com/api/0969fa94ff054025807769cc6ba4b58b/ProductData")
-//     .then((response) => {
-//       response.data.forEach((product) => {
-//         addItemToList(product.pname, product.pprice,product._id);
-//       });
-//     })
-//     .catch(err => {
-//       console.log(err);
-//     });
-// }
 function retrieveData() {
-  axios.get("https://crudcrud.com/api/0969fa94ff054025807769cc6ba4b58b/ProductData")
+  axios.get("https://crudcrud.com/api/afa2b0a872134eaea2ede4d2a0bb9882/ProductData")
     .then((response) => {
       products = response.data;
       products.forEach((product) => {
         addItemToList(product.pname, product.pprice, product._id);
+        Number(totalCost)+=Number(pprice);
       });
       updateTotalCost();
     })
@@ -33,6 +23,21 @@ function retrieveData() {
       console.log(err);
     });
 }
+
+// async function retrieveData() {
+//   try {
+//     const response = await axios.get("https://crudcrud.com/api/afa2b0a872134eaea2ede4d2a0bb9882/ProductData");
+//     const products = response.data;
+//     products.forEach((product) => {
+//       addItemToList(product.pname, product.pprice, product._id);
+//       Number(totalCost) += Number(product.pprice);
+//     });
+//     updateTotalCost();
+//   } catch (err) {
+//     console.log(err);
+//   }
+// }
+
 
 function addItemToList(pname, pprice,productId) {
   var newItem = pname + "-" + pprice;
@@ -69,8 +74,9 @@ function addItemToList(pname, pprice,productId) {
 
 function updateTotalCost(){
     const totalCostElement=document.getElementById('TotalCost');
-    totalCostElement.textContent='Total Value worth of Products:'+
-    totalCost;
+
+    console.log(totalCost);
+    totalCostElement.textContent=`Total Value worth of Products:${totalCost}`;
 }
 
 
@@ -86,7 +92,7 @@ function clickHandler(event){
       const userJson = JSON.stringify(product);
 
       //post data into the crud server
-      axios.post("https://crudcrud.com/api/0969fa94ff054025807769cc6ba4b58b/ProductData",product)
+      axios.post("https://crudcrud.com/api/afa2b0a872134eaea2ede4d2a0bb9882/ProductData",product)
       .then((response)=>{
         console.log(response)
       })
@@ -127,26 +133,28 @@ function clickHandler(event){
           if (confirm('Are you sure?')) {
             var li = e.target.parentElement;
             var productId = li.id;
-      
+            console.log(li);
+     
             // Get the price of the product from the list item's text
             var productText = li.textContent;
-            var productPrice = productText.split('-')[1];
-      
+            console.log(productText);
+            var productPrice = productText.split('-')[1].split('delete')[0].trim();
+            console.log(productPrice);
             // Check if productPrice is a number
-            if (!isNaN(productPrice)) {
-              // Subtract the product's price from the total cost
+           
               totalCost -= Number(productPrice);
               updateTotalCost();
-            }
+            
       
-            axios.delete(`https://crudcrud.com/api/0969fa94ff054025807769cc6ba4b58b/ProductData/${productId}`)
+            axios.delete(`https://crudcrud.com/api/afa2b0a872134eaea2ede4d2a0bb9882/ProductData/${productId}`)
               .then((response) => {
                 console.log(response);
-                productList.removeChild(li);
+              
               })
               .catch((error) => {
                 console.log(error);
               });
+              productList.removeChild(li);
           }
         }
       }
@@ -161,7 +169,7 @@ function clickHandler(event){
     const [pname, pprice] = ProductText.split('-');
         const productId=listItem.id;
     
-        axios.delete(`https://crudcrud.com/api/0969fa94ff054025807769cc6ba4b58b/ProductData/${productId}`)
+        axios.delete(`https://crudcrud.com/api/afa2b0a872134eaea2ede4d2a0bb9882/ProductData/${productId}`)
         .then((response) => {
           console.log(response);
           productList.removeChild(listItem);
@@ -169,22 +177,22 @@ function clickHandler(event){
         .catch((error) => {
           console.log(error);
         });
-        totalCost -= parseFloat(oldPrice);
+        totalCost -= Number(oldPrice);
 
         document.getElementById('Pprice').value = pprice;
         document.getElementById('Pname').value = pname;
 
-      const newPrice = parseFloat(prompt("Enter the new price:"));
-    const newName = prompt("Enter the new name:");
+    //   const newPrice = parseFloat(prompt("Enter the new price:"));
+    // const newName = prompt("Enter the new name:");
 
-    // Add the new price to the total cost
-    totalCost += newPrice;
+    // // Add the new price to the total cost
+    // totalCost += newPrice;
 
-    // Update the total cost display
-    updateTotalCost();
+    // // Update the total cost display
+    // updateTotalCost();
 
-    // Add the updated product to the list
-    addItemToList(newName, newPrice, productId);
+    // // Add the updated product to the list
+    // addItemToList(newName, newPrice, productId);
       }
     //   updateTotalCost();
     }
