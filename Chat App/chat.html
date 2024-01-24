@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+</head>
+<body>
+    <h2>Chat</h2>
+    <div id="messages"></div>
+    <form id="sendMessageForm" action="/sendMessage" method="post">
+        <label for="message">Message:</label>
+        <input type="text" id="message" name="message" required>
+        <button type="submit">Send Message</button>
+    </form>
+
+    <script>
+        // Get username from local storage
+        const username = localStorage.getItem('username');
+        if (username) {
+            document.cookie = `username=${username}`;
+        }
+
+        function displayMessages(messages) {
+            const messagesDiv = document.getElementById('messages');
+            messagesDiv.innerHTML = '';
+            messages.forEach(msg => {
+                const messageElement = document.createElement('p');
+                messageElement.textContent = `${msg.username}: ${msg.message}`;
+                messagesDiv.appendChild(messageElement);
+            });
+        }
+
+        // Fetch and display messages
+        fetch('/getMessages')
+            .then(response => response.json())
+            .then(messages => displayMessages(messages));
+
+        // Submit message form
+        document.getElementById('sendMessageForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const message = document.getElementById('message').value;
+            fetch('/sendMessage', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `message=${message}`,
+            });
+            document.getElementById('message').value = '';
+        });
+
+        // Periodically fetch and display messages
+        setInterval(() => {
+            fetch('/getMessages')
+                .then(response => response.json())
+                .then(messages => displayMessages(messages));
+        }, 2000);
+    </script>
+</body>
+</html>
