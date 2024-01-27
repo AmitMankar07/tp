@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Success Page</title>
     <title>Add Product</title>
-    <title>Add Product</title>
-    <link rel="stylesheet" href="/css/product.css">
-    
+    <link rel="stylesheet" href="/css/success.css">
+ 
 </head>
 <body>
     <header class="main-header">
@@ -18,16 +18,10 @@
             </ul>
         </nav>
     </header>
-
-    <main>
-        <form class="product-form" action="/add-product" method="POST">
-            <div class="form-control">
-                <label for="title">Product Name</label>
-                <input type="text" name="title" id="title">
-            </div>
-
-            <button type="submit">Add Product</button>
-         </form>
-    </main>
+    <div class="success-container">
+        <img class="success-img" src="https://placekitten.com/400/300" alt="Success Cat Image">
+        <h1 class="success-message">Form Submitted Successfully</h1>
+        <p>Your details have been received. We'll get in touch with you soon!</p>
+    </div>
 </body>
 </html>

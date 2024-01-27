@@ -3,44 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Contact Us</title>
+    <title>Add Product</title>
+    <link rel="stylesheet" href="/css/contactus.css">
+   
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="/">Shop</a></li>
-                <li><a href="/add-product">Add Product</a></li>
-                <li><a href="/contactus">Contact Us</a></li>
+    <header class="main-header">
+        <nav class="main-header__nav">
+            <ul class="main-header__item-list">
+                <li class="main-header__item"><a href="/">Shop</a></li>
+                <li class="main-header__item"><a href="/admin/add-product">Add Product</a></li>
+                <li class="main-header__item"><a href="/contactus">Contact Us</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
         <div>
-            <h1>Book A  Call</h1>
+            
+    
+            <form class="contact-form" action="/success" method="POST">
+                <h1>Book A  Call</h1>
             <h3>Book a call and we will reach you</h3>
             <hr>
-    
-            <form action="">
-                <div>
-                    <label for="">Name:</label>
-                    <input type="text" >
+                <div class="form-control">
+                    <label for="Name">Name:</label>
+                    <input type="text" name="Name" id="name" required>
                 </div>
-                <div>
-                    <label for="">Email:</label>
-                    <input type="text" >
-                </div>
-                <div>
-                    <label for="">Phone:</label>
-                    <input type="tel" >
-                </div>
-                <div>
-                    <label for="">Time for Call:</label>
-                    <input type="date" ><input type="time">
+                <div class="form-control">
+                    <label for="Email">Email:</label>
+                    <input type="text" id="email" name="Email" required>
                 </div>
 
-                <button>Get A Call</button>
+
+                <div class="form-control">
+                    <label for="Phone">Phone:</label>
+                    <input type="tel" id="Phone" name="Phone">
+                </div>
+                
+
+                <button type="submit" >Get A Call</button>
             </form>
         </div>
        

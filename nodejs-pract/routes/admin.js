@@ -7,7 +7,7 @@ const rootDir=require('../util/path');
 //get
 router.get('/add-product',(req,res,next)=>{
     // console.log("In the middleware");
-    res.sendFile(path.join(__dirname,'../','views','add-product.html'));
+    res.sendFile(path.join(rootDir,'views','add-product.html'));
     });
 
     //POST
