@@ -7,5 +7,6 @@ const contactController = require('../controllers/contactController');
 
 
 router.get('/',contactController.getContact);
+router.post('/',contactController.postContact);
 
 module.exports=router;
