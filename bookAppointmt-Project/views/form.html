@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Form</title>
+</head>
+<body>
+  <h1>User Form</h1>
+  <form id="userForm" action="/submit" method="post">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+    <br>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    <br>
+    <label for="phone">Phone:</label>
+    <input type="tel" id="phone" name="phone" required>
+    <br>
+    <button type="submit">Submit</button>
+  </form>
+
+  <!-- Display entered data -->
+  <h2>Entered Data</h2>
+  <ul id="userDataList"></ul>
+
+  <script>
+    // JavaScript code for handling form submission and displaying data
+    async function fetchUsers() {
+      const response = await fetch('/users');
+      const users = await response.json();
+
+      const userDataList = document.getElementById('userDataList');
+      userDataList.innerHTML = '';
+
+      users.forEach(user => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${user.name} - ${user.email} - ${user.phone}`;
+        
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete';
+        deleteButton.addEventListener('click', () => deleteUser(user.id));
+
+        listItem.appendChild(deleteButton);
+        userDataList.appendChild(listItem);
+      });
+    }
+
+    function deleteUser(userId) {
+      fetch(`/delete/${userId}`)
+        .then(() => fetchUsers())
+        .catch(error => console.error('Error deleting user:', error));
+    }
+
+    document.getElementById('userForm').addEventListener('submit', event => {
+      event.preventDefault();
+
+      const formData = new FormData(event.target);
+      fetch('/submit', {
+        method: 'POST',
+        body: formData
+      })
+      .then(() => {
+        fetchUsers();
+        event.target.reset();
+      })
+      .catch(error => console.error('Error submitting form:', error));
+    });
+
+    // Initial fetch to display existing users
+    fetchUsers();
+  </script>
+</body>
+</html>
