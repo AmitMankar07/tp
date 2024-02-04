@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+   
+</head>
+
+<body>
+        <form action="/add-user" method="post" id="registrationForm">
+            <h1>Registration Form</h1>
+            <div>
+                <label for="Name">Name</label>
+                <input type="text" name="Name" id="Name">
+            </div>
+            <div>
+                <label for="Email">Email</label>
+                <input type="text" name="Email" id="Email">
+            </div>
+            <div>
+                <label for="Phone">Phone</label>
+                <input type="text" name="Phone" id="Phone">
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+
+        <ul id="list"></ul>
+
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js" defer></script>
+        <script>
+        console.log("inside script");
+            const registrationForm = document.getElementById("registrationForm");
+        const list = document.getElementById("list");
+    
+        registrationForm.addEventListener("submit", storeToLocal);
+    
+    
+    function storeToLocal(e)
+    {
+    console.log("store to local");
+    e.preventDefault();
+    const Name=document.getElementById("Name").value;
+    const Email=document.getElementById("Email").value;
+    const Phone=document.getElementById("Phone").value;
+    
+    const obj1={
+            Name,
+            Email,
+            Phone
+    };
+    
+      axios.post('http://localhost:5000/add-user',obj1,{
+    headers: {
+        'Content-Type': 'application/json'
+    }
+})
+       .then((response)=>{
+        console.log("Axios request Succesfully");
+        console.log("response:",response);
+        console.log("response.data",response.data);
+        showOnScreen(response.data);
+        
+        //clear fields
+        document.getElementById("Name").value = '';
+    document.getElementById("Email").value = '';
+    document.getElementById("Phone").value = '';
+
+       })
+    //    showOnScreen(res.data);
+    .catch((err)=>{
+        console.log(err);
+    });
+    }
+    
+    
+    function showOnScreen(user) {
+    console.log("User object: ",user);
+    const listItem = document.createElement('li');
+    listItem.innerHTML = `<strong>${user.Name}</strong> - ${user.Email} - ${user.Phone}
+                        <button onclick="editUserDetails('${user._id}','${user.Name}','${user.Email}','${user.Phone}')">Edit</button>
+                        <button onclick="deleteUser('${user._id}')">Delete</button>`;
+    const list = document.getElementById('list');
+    list.appendChild(listItem);
+    console.log("List item: ",listItem);
+    }
+        </script>
+    
+</body>
+</html>

@@ -20,13 +20,19 @@ console.log(copyarray);
 
 console.log(newarray);
 
+console.log('a');
+console.log('b');
 
-const obj1 = {'key1': 1 , 'key2' : 2}
+function timeout(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
-const obj2 = { ...obj1, key1: 1000}
+async function asyncCall() {
+    await timeout(3000);
+    console.log('c');
+    await timeout(0);
+    console.log('d');
+    console.log('e');
+}
 
-
-
-console.log(obj1)
-
-console.log(obj2)
+asyncCall();
