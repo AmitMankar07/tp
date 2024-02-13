@@ -1,9 +1,14 @@
 const Sequelize=require('sequelize');
 
-const sequelize = new Sequelize('Attendance', 'root', 'Amit1234', {
+const sequelize = new Sequelize('attendance', 'root', 'Amit1234', {
     host: 'localhost',
     dialect: 'mysql'
   });
 
+  sequelize.authenticate().then(() => {
+    console.log('Connection has been established successfully.');
+ }).catch((error) => {
+    console.error('Unable to connect to the database: ', error);
+ });
   
   module.exports=sequelize;

@@ -1,31 +1,34 @@
 const express=require('express');
+const app=express();
+
 const bodyParser=require('body-parser');
 const path=require('path');
 const cors=require('cors');
 
-const app=express();
+const sequelize=require('./util/database');
+const errorController=require('./controllers/error')
+const adminRoutes=require('./routes/admin');
 
+// middlleware
+app.use(express.static('./public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cors());
 
-const adminRoutes=require('./routes/admin');
-const { sequelize, Student } = require('./models/index');
 
-app.use('/admin',adminRoutes);
 
-app.all('*',(req,res,next)=>{
-    res.status(404).send("Resource not found");
-});
+// routes
+app.use('/students',adminRoutes);
+
+// app.all('*',errorController);
 
 sequelize.sync()
-  .then(() => {
+  .then(result => {
     console.log('Database and table created successfully.');
+    app.listen(5000,()=>{
+      console.log("Server is listening at port 5000...")
+    });
   })
   .catch((error) => {
     console.error('Error creating database and table:', error);
   });
 
-app.listen(5000,()=>{
-    console.log("Server is listening at 6000...");
-})
