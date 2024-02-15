@@ -1,3 +1,4 @@
+
 console.log("in js file");
 window.onload=function(){
 
@@ -27,7 +28,7 @@ window.onload=function(){
           rowDiv.style.alignItems = 'center';
           
           rowDiv.innerHTML = `
-          <div>${row.name}</div>
+          <div id="student-${row.id}">${row.name}</div>
           <div class="spacer"></div>
           <div>
             <input type="radio" id="present-${row.id}" name="attendance-${row.id}" value="present">
@@ -44,9 +45,48 @@ window.onload=function(){
         // add a new button element after all the rowDiv elements
         const markAttendanceBtn = document.createElement('button');
         markAttendanceBtn.textContent = 'Mark Attendance';
-        markAttendanceBtn.addEventListener('click', () => {
-          alert('Marking attendance...');
+
+
+        markAttendanceBtn.addEventListener('click', async () => {
+          const attendanceData = [];
+          const attendanceInputs = document.querySelectorAll('input[name^="attendance-"]');
+          if (!attendanceInputs) {
+            console.error("attendanceInputs not found:", attendanceInputs);
+            return;
+          }
+          for (let i = 0; i < attendanceInputs.length; i++) {
+            if (attendanceInputs[i].checked) {
+              const studentId = attendanceInputs[i].id.split('-')[1];
+              const attendance = attendanceInputs[i].value === 'present' ? false : true;
+              console.log("studentId:", studentId);
+              console.log("attendance:", attendance);
+              
+              attendanceData.push({
+                student_id: studentId,
+                date: document.getElementById('date').value,
+                is_absent: attendance,
+              });
+            }
+            console.log("attendanceData:",attendanceData);
+          }
+          console.log("atndnc data outside:",attendanceData);
+        
+          try {
+            const response = await axios.post('http://localhost:5000/students/attendance', attendanceData);
+            console.log(response.data);
+            markAttendanceBtn.style.
+            const studentNameDivs = document.getElementsByClassName('student-name');
+            for (let i = 0; i < studentNameDivs.length; i++) {
+              const studentId = studentNameDivs[i].id.split('-')[1];
+              const attendance = response.data.students.some(s => s.student_id === studentId && s.is_absent);
+              studentNameDivs[i].classList.add(attendance ? 'absent' : 'present');
+            } 
+          } catch (error) {
+            console.error(error);
+          }
+          console.log("response:",response);
         });
+
         resultsDiv.appendChild(markAttendanceBtn);
     }else {
         console.error("response.data.students is not an array:", response.data);

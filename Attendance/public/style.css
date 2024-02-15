@@ -66,3 +66,21 @@ body {
   #results button:hover {
     background-color: #444;
   }
+
+  .student-name {
+    display: inline-block;
+    margin-right: 10px;
+    font-weight: bold;
+  }
+  
+  .student-name.present {
+    color: green;
+  }
+  
+  .student-name.absent {
+    color: red;
+  }
+
+  .hidden {
+    display: none;
+  }
