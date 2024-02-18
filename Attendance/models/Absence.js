@@ -32,8 +32,8 @@ const Absence = sequelize.define('absences', {
   tableName:"absences",
 });
 
-Student.hasMany(Absence);
-Absence.belongsTo(Student);
+Student.hasMany(Absence,{foreignKey:'student_id'});
+Absence.belongsTo(Student,{foreignKey:'student_id'});
 
 
 module.exports = {

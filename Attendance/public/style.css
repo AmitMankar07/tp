@@ -84,3 +84,6 @@ body {
   .hidden {
     display: none;
   }
+  .icon {
+    font-size: 20px;
+  }
