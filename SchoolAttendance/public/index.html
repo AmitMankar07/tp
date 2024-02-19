@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        .header{
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            background-color: darkslateblue;
+        }
+        
+        #display > div{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+        }
+        
+        input{
+            margin: 10px;
+        }
+        
+        p{
+            min-width: 30%;
+        }
+        
+        li{
+            display: flex;
+            align-items: center;
+        
+        }
+        
+        .hide{
+            display : none;
+        }
+        
+        table {
+            width: 100%;
+        }
+        
+        th{
+            min-width: 25%;
+            text-align: center;
+            background-color: darkslateblue;
+        }
+        td{
+            min-width: 25%;
+            text-align: center;
+            
+        }
+        
+        </style>
+    <title>Attendence</title>
+</head>
+
+<body>
+    <div class="header">
+        <form id="date">
+            <label for="date">Select a date:</label>
+            <input type="date" name="getdate" id="getdate" value="2024-2-1">
+            <button type="submit">Search</button>
+        </form>
+
+        <button id="report" type="submit">Attendence report</button>
+    </div>
+    <h2>Students:</h2>
+    <div id="display">
+        <form >
+
+            <ul>
+                <!-- <li>fav_language
+                    <input type="radio" name="fav_language" value="present" required>
+                    <label for="present">present</label>
+                    <input type="radio" name="fav_language" value="absent" required>
+                    <label for="absent">absent</label>
+                </li>
+                <li>fav_language2
+                    <input type="radio" name="2" value="present" required>
+                    <label for="present">present</label>
+                    <input type="radio" name="2" value="absent" required>
+                    <label for="absent">absent</label>
+                </li> -->
+            </ul>
+        <button class="hide" type="submit" style="background-color: darkslateblue;">Mark attendence</button>
+        </form>
+        <table id="attendence-report" class="hide">
+            <thead>
+
+                <tr>
+                    <th>Name</th>
+                    <th>Total present</th>
+                    <th>Attendence percentage</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+            </table>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+
+<!-- <script src="attendence.js"></script> -->
+</html>
