@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
+    <title>Login</title>
     
     <!-- <link rel="stylesheet" href="./style.css"> -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -62,21 +62,25 @@ h2{
   
     justify-content: center;
 }
+#error-message {
+  color: red;
+  background-color: #fff;
+  padding: 5px;
+  margin-top: 5px;
+  border-radius: 5px;
+  display: block;
+}
 
     </style>
 </head>
 <body>
     <div>
+        
 
-   
-    <form id="signup-form" action="/users/signup" method="post">
-        <h2>Expense Tracker App</h2>
+    <form id="login-form" action="/users/login" method="post">
+        <h2>Login</h2>
         <div>
-            <Label for="name">Name:</Label>
-            <input type="text" id="name" name="name"  placeholder="Enter Name here:" required>
-        </div>
-        <div>
-            <label for="email">Email: </label>
+            <Label for="email">Email: </Label>
             <input type="text" id="email" name="email" placeholder="Enter email here:" required>
 
         </div>
@@ -84,9 +88,9 @@ h2{
             <label for="password">Password</label>
             <input type="password" name="password" id="password" placeholder="Enter password here:" class="form-control" required> 
         </div>
-       <button type="submit">Sign Up</button>
+       <button type="submit">Login</button>
     </form>
-    <a href="./login.html">Existing User-Login</a>
+    <a href="./signup.html">New User-Sign Up</a>
 </div>
     <script src="src.js"></script>
 </body>

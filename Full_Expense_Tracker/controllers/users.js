@@ -4,13 +4,52 @@ const bcrypt=require('bcrypt');
 const postSignUp=async(req,res,next)=>{
     try{
         const {name,email,password}=req.body;
-        const hashedPassword = await bcrypt.hash(password, 8);
-        const user=await User.create({name,email,password:hashedPassword});
-        res.status(201).json(user);
-    }catch(error){
-        res.status(500).json({message:error.message});
+       console.log("{name,email,password}:",{name,email,password});
+       
+       if (!name || !email || !password) {
+           res.status(400).json({ message: 'Name, email, and password are required' });
+           return;
+         }
+         const hashedPassword=await bcrypt.hash(password,10);
 
-    }
-}
+       
+         const user = await User.create({ name, email, password:hashedPassword });
+         console.log("User created:", user);
+         res.status(201).json(user);
+      
+     
+   }catch(error){
+       console.error(error);
+       res.status(500).json({message:error.message});
 
-module.exports={postSignUp};
+   }
+};
+
+const postUserLogin=async(req,res,next)=>{
+    try {
+        const { email, password } = req.body;
+        console.log("emaul and pass",{ email, password })
+        if (!email || !password) {
+          res.status(400).json({ message: 'Email and password are required' });
+          return;
+        }
+        const user = await User.findOne({ where: { email } });
+        if (!user) {
+          res.status(404).json({ message: 'User not found' });
+          return;
+        }
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+          res.status(401).json({ message: 'Invalid password' });
+          return;
+        }
+        res.status(200).json(user);
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: error.message });
+      }
+};
+
+
+
+module.exports={postSignUp,postUserLogin};

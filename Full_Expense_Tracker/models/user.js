@@ -21,11 +21,11 @@ const User=sequelize.define('users',{
     password:{
         type:Sequelize.STRING,
         allowNull:false,
-        // set(value) {
-        //     const hashedPassword = bcrypt.hashSync(value, 8);
-        //     this.setDataValue('password', hashedPassword);
-        //   }
-
+        validate: {
+            notNull: {
+              msg: 'Password is required'
+            }
+          }
 
     }
 });
