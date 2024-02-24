@@ -10,6 +10,12 @@ const postSignUp=async(req,res,next)=>{
            res.status(400).json({ message: 'Name, email, and password are required' });
            return;
          }
+         // Check if the email id already exists
+    const existingUser = await User.findOne({ where: { email } });
+    if (existingUser) {
+      res.status(400).json({ message: 'Email id already exists' });
+      return;
+    }
          const hashedPassword=await bcrypt.hash(password,10);
 
        

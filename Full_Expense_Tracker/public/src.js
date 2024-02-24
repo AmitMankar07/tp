@@ -5,6 +5,19 @@ function clearFields() {
     document.getElementById('password').value = '';
     console.log("field clear");
 }
+document.getElementById('email').addEventListener('input', () => {
+    const errorMessage = document.querySelector('#signup-form p');
+    if (errorMessage) {
+        errorMessage.remove();
+    }
+});
+
+document.getElementById('password').addEventListener('input', () => {
+    const errorMessage = document.querySelector('#signup-form p');
+    if (errorMessage) {
+        errorMessage.remove();
+    }
+});
 
 document.getElementById('signup-form').addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -21,6 +34,14 @@ document.getElementById('signup-form').addEventListener('submit', async (event) 
         console.log("function");
     } catch (error) {
         console.error(error.response.data);
+                // Create an error message element
+                const errorMessage = document.createElement('p');
+                errorMessage.textContent = error.response.data.message;
+                errorMessage.style.color = 'red';
+        
+                // Append the error message element to the signup form
+                document.getElementById('signup-form').appendChild(errorMessage);
+            
     }
 
 });
