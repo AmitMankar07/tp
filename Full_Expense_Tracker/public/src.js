@@ -1,30 +1,36 @@
 
-function clearFields() {
+//
+// });
+
+// });
+document.addEventListener('DOMContentLoaded', () => {
+  function clearFields() {
     document.getElementById('name').value = '';
     document.getElementById('email').value = '';
     document.getElementById('password').value = '';
     console.log("field clear");
-}
-document.getElementById('email').addEventListener('input', () => {
+  }
+
+  document.getElementById('email').addEventListener('input', () => {
     const errorMessage = document.querySelector('#signup-form p');
     if (errorMessage) {
         errorMessage.remove();
     }
-});
+  });
 
-document.getElementById('password').addEventListener('input', () => {
+  document.getElementById('password').addEventListener('input', () => {
     const errorMessage = document.querySelector('#signup-form p');
     if (errorMessage) {
         errorMessage.remove();
     }
-});
+  });
 
-document.getElementById('signup-form').addEventListener('submit', async (event) => {
+  document.getElementById('signup-form').addEventListener('submit', async (event) => {
     event.preventDefault();
     const name = document.getElementById('name').value;
     const email= document.getElementById('email').value;
     const password = document.getElementById('password').value;
-    
+
     console.log("name,email,password:", { name, email, password });
      try {
         const response = await axios.post('/users/signup', { name, email, password });
@@ -44,23 +50,45 @@ document.getElementById('signup-form').addEventListener('submit', async (event) 
             
     }
 
-});
+  });
 
-document.getElementById('login-form').addEventListener('submit',async(e)=>{
-    e.preventDefault();
+  document.getElementById('login-form').addEventListener('submit', async (event) => {
+    event.preventDefault();
     const email=document.getElementById('email').value;
     const password=document.getElementById('password').value;
 
    console.log("email,password:",{email,password});
 
    try{
-    const response=axios.post('/users/login',{email,password});
-    console.log(response.data);
+    const response = await axios.post('/users/login', {
+        email, password
+      });
+  
+      console.log(response.data);
+    // const response=axios.post('/users/login',{email,password});
+    // console.log(response.data);
 
-    email.value='';
-    password.value='';
+    // If the login is successful, redirect the user to the home page
+    if (response.status === 200) {
+        window.location.href = '/';
+      }
+
+  // Clear the email and password fields
+    document.getElementById('email').value = '';
+    document.getElementById('password').value = '';
+
    }catch(error){
-    console.log("error:",error.response.data);
+    console.log("error:",error);
+        // Display an error message to the user
+        // if (error.response.status === 400) {
+        //     alert(error.response.data.message);
+        //   } else if (error.response.status === 404) {
+        //     alert(error.response.data.message);
+        //   } else if (error.response.status === 401) {
+        //     alert(error.response.data.message);
+        //   }
    }
+
+  });
 
 });
