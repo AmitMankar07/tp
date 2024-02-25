@@ -16,10 +16,10 @@ const postSignUp=async(req,res,next)=>{
       res.status(400).json({ message: 'Email id already exists' });
       return;
     }
-        //  const hashedPassword=await bcrypt.hash(password,10);
+         const hashedPassword=await bcrypt.hash(password,10);
 
        
-         const user = await User.create({ name, email, password});
+         const user = await User.create({ name, email, password:hashedPassword});
          console.log("User created:", user);
          res.status(201).json(user);
       
@@ -35,7 +35,8 @@ const postUserLogin=async(req,res,next)=>{
     try {
       console.log("inside login:",req.body)
         const { email, password } = req.body;
-        console.log("email and pass",{ email, password })
+        console.log("email and pass",{ email, password });
+
         if (email==null || password==null) {
           res.status(400).json({ message: 'Email and password are required' });
           return;
@@ -45,7 +46,7 @@ const postUserLogin=async(req,res,next)=>{
           res.status(404).json({ message: 'User not found' });
           return;
         }
-        const isPasswordValid = await User.findOne({where :{password}});
+        const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
           res.status(401).json({ message: 'Invalid password' });
           return;
