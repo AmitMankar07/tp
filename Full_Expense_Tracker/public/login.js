@@ -34,7 +34,7 @@ document.getElementById('password').addEventListener('input', () => {
         
             // If the login is successful, redirect the user to the home page
             if (response.status === 200) {
-                alert('login Success');
+                alert('Login Successfull!');
                 const successMessage = document.createElement('p');
                 successMessage.textContent = 'Login successful!';
                 successMessage.style.color = 'green';
@@ -53,14 +53,19 @@ document.getElementById('password').addEventListener('input', () => {
                 errorMessage.style.color = 'red';
                 errorMessage.style.marginTop = '10px';
                 errorMessage.style.fontSize = '12px';
+
+                alert(error.response.data.message);
                 document.querySelector('#login-form label[for="email"]').insertAdjacentElement('beforebegin', errorMessage);
              
+               
                   } else if (error.response.status === 404) {
                  const errorMessage = document.createElement('p');
                   errorMessage.textContent ='*'+ error.response.data.message;
                   errorMessage.style.color = 'red';
                   errorMessage.style.marginTop = '10px';
                   errorMessage.style.fontSize = '12px';
+
+                  alert(error.response.data.message);
                   document.querySelector('#login-form label[for="email"]').insertAdjacentElement('beforebegin', errorMessage);
                
                   } else if (error.response.status === 401) {const errorMessage = document.createElement('p');
@@ -68,6 +73,8 @@ document.getElementById('password').addEventListener('input', () => {
                   errorMessage.style.color = 'red';
                   errorMessage.style.marginTop = '10px';
                   errorMessage.style.fontSize = '12px';
+
+                  alert(error.response.data.message);
                   document.querySelector('#login-form label[for="email"]').insertAdjacentElement('beforebegin', errorMessage);
                       }
            }
