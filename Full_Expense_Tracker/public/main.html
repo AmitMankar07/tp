@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+   
+</head>
+<body>
+    <h2>Expense Tracker</h2>
+    <div>
+        <form action="/users/main" method="post" id="expense-form">
+            <div>
+                <label for="Amount">Enter Expense Amount:</label>
+                <input type="number" id="amount" name="amount" required>
+            </div>
+            <div>
+                <label for="description">Choose Description:</label>
+                <input type="text" id="description" name="description" required>
+            </div>
+
+            <div>
+                <label for="category">Choose a Category:</label>
+                <select name="category" id="category">
+                    <option value="Fuel">Fuel</option>
+                    <option id="food">food</option>
+                    <option id="electricity">electricity</option>
+                    <option id="movies">movies</option>
+                    <option id="Grocery">Grocery</option>
+                </select>
+                <ul id="items">
+                    <li></li>
+                </ul>
+            </div>
+            <button id="submit" type="submit">Add Expense</button>
+        </form>
+    </div>
+    <script src="./main.js"></script>
+</body>
+</html>

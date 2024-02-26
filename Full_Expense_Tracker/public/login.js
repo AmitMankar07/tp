@@ -35,12 +35,14 @@ document.getElementById('password').addEventListener('input', () => {
             // If the login is successful, redirect the user to the home page
             if (response.status === 200) {
                 alert('Login Successfull!');
+                
                 const successMessage = document.createElement('p');
                 successMessage.textContent = 'Login successful!';
                 successMessage.style.color = 'green';
                 successMessage.style.marginTop = '10px';
                 document.querySelector('#login-form label[for="email"]').insertAdjacentElement('beforebegin', successMessage);
-              }
+              window.location.href='main.html';
+            }
         
           // Clear the email and password fields
          clearFields();
