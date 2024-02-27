@@ -30,7 +30,9 @@ document.getElementById('password').addEventListener('input', () => {
                 email,password
             })
              console.log(response.data);
+             localStorage.setItem('token',response.data);
             
+            //  const token=JSON.parse(localStorage.getItem('token'));
         
             // If the login is successful, redirect the user to the home page
             if (response.status === 200) {

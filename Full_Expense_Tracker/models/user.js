@@ -1,6 +1,7 @@
 const Sequelize=require('sequelize');
 const sequelize=require('../util/db')
 const bcrypt=require('bcrypt');
+const expenses=require('./expense')
 
 const User=sequelize.define('users',{
     id:{
@@ -23,5 +24,7 @@ const User=sequelize.define('users',{
 
     }
 });
+
+User.hasMany(expenses,{foreignKey:'userId'});
 
 module.exports=User;

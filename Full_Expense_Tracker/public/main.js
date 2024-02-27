@@ -12,7 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to fetch and display expenses
     async function fetchAndDisplayExpenses() {
         try {
-            const expensesResponse = await axios.get('/users/expenses');
+            const token=localStorage.getItem('token');
+            const expensesResponse = await axios.get('/users/expenses',{Headers:{"Authorization":token}});
             const expenses = expensesResponse.data;
             const itemsList = document.getElementById('items');
             itemsList.innerHTML = ''; // Clear existing list items

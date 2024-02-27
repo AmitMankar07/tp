@@ -1,5 +1,7 @@
 const User=require('../models/user');
 const bcrypt=require('bcrypt');
+const jwt=require('jsonwebtoken');
+
 
 const postSignUp=async(req,res,next)=>{
     try{
@@ -51,7 +53,8 @@ const postUserLogin=async(req,res,next)=>{
           res.status(401).json({ message: 'Invalid password' });
           return;
         }
-        res.status(200).json(user);
+        const token=jwt.sign({userId:user.id},'secretkey');
+        res.status(200).json(token);
       } catch (error) {
         console.error(error);
         res.status(500).json({ message: error.message });

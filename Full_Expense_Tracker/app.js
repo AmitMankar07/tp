@@ -7,6 +7,7 @@ const cors=require('cors');
 
 const sequelize=require('./util/db');
 const User=require('./models/user');
+const Expense=require('./models/expense')
 const adminRoutes=require('./routes/adminRoutes');
 
 
@@ -18,6 +19,9 @@ app.use(express.static('./public'));
 app.use(cors());
 app.use(express.json());
 app.use('/users',adminRoutes);
+
+// User.hasMany(Expense);
+// Expense.belongsTo(User);
 
 sequelize.sync().then(
     ()=>{
