@@ -1,7 +1,7 @@
 const express=require('express');
 const {postSignUp,postUserLogin}=require('../controllers/users')
 
-const {postUserExpenses, getUserExpenses}=require('../controllers/expenses');
+const {postUserExpenses, getUserExpense,editUserExpenses,deleteUserExpenses,getAllExpenses}=require('../controllers/expenses');
 
 const User=require('../models/user');
 const bcrypt=require('bcrypt');
@@ -13,6 +13,13 @@ router.post('/login',postUserLogin);
 
 router.post('/expenses',postUserExpenses);
 
-router.get('/expenses',getUserExpenses);
+router.get('/expenses',getAllExpenses);
+
+router.get('/expenses/:id',getUserExpense);
+
+router.delete('/expenses/:id',deleteUserExpenses);
+
+router.put('/expenses/:id',editUserExpenses);
+
 
 module.exports=router;
