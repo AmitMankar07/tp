@@ -20,8 +20,8 @@ app.use(cors());
 app.use(express.json());
 app.use('/users',adminRoutes);
 
-// User.hasMany(Expense);
-// Expense.belongsTo(User);
+User.hasMany(Expense,{ foreignKey: 'userId' });
+Expense.belongsTo(User);
 
 sequelize.sync().then(
     ()=>{

@@ -1,7 +1,7 @@
 const jwt=require('jsonwebtoken');
 const User=require('../models/user');
 
-const authenticate=(req,res,next)=>{
+const authenticate=async(req,res,next)=>{
     
 
     try {
@@ -12,17 +12,24 @@ console.log(token);
         return res.status(401).json({ message: 'Access denied. Token missing.' });
     }
         // Verify the token using the secret key
-        const user= jwt.verify(token, 'secretkey');
-        console.log('userID>>>>',user.userId);
-        User.findByPk(user.userId).then(user=>{
-            req.user=user;
-            next();
-        })
+        const decodedToken = jwt.verify(token, 'secretkey');
+        const userId = decodedToken.userId;
 
-        // Attach the user ID to the request object
+        console.log('userID>>>>',userId);
+          // Check if user exists
+          const user = await User.findByPk(userId);
+          if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+         // Attach the user object to the request
+         req.user = user;
+
+         // Continue to the next middleware
+         next();
+
         
 
-        // Continue to the next middleware
+        
 
     } catch (error) {
         console.log("in auth");

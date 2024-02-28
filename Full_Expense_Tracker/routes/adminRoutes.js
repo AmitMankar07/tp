@@ -6,15 +6,18 @@ const userAuthenticate=require('../middleware/auth')
 
 const User=require('../models/user');
 const bcrypt=require('bcrypt');
+const authenticate = require('../middleware/auth');
 const router=express.Router();
 
 router.post('/signup',postSignUp);
 
 router.post('/login',postUserLogin);
 
+router.use(authenticate);
+
 router.post('/expenses',postUserExpenses);
 
-router.get('/expenses',userAuthenticate.authenticate,getAllExpenses);
+router.get('/expenses',getAllExpenses);
 
 router.get('/expenses/:id',getUserExpense);
 

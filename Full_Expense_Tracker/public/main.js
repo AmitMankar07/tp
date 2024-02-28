@@ -13,7 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
     async function fetchAndDisplayExpenses() {
         try {
             const token=localStorage.getItem('token');
-            const expensesResponse = await axios.get('/users/expenses',{Headers:{"Authorization":token}});
+            if (!token) {
+                // Handle case when token is not present
+                console.error('No token found');
+                return;
+            }
+            const expensesResponse = await axios.get('/users/expenses',{
+                headers:{'Authorization':`${token}`}});
             const expenses = expensesResponse.data;
             const itemsList = document.getElementById('items');
             itemsList.innerHTML = ''; // Clear existing list items
@@ -54,11 +60,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const amount = document.getElementById('amount').value;
         const description = document.getElementById('description').value;
         const category = document.getElementById('category').value;
-
+        
         console.log("amount, desc, category:", { amount, description, category });
 
         try {
-            const response = await axios.post('/users/expenses', { amount, description, category });
+            const token = localStorage.getItem('token');
+            console.log("token in main js file",token);
+        if (!token) {
+            // Handle case when token is not present
+            console.error('No token found in mainjs');
+            return;
+        }
+            const response = await axios.post('/users/expenses', { 
+                amount, description, category },
+                { headers: { 'Authorization': token }});
             console.log(response.data);
             console.log("expense posted");
 
@@ -87,7 +102,8 @@ document.addEventListener('DOMContentLoaded', () => {
     async function deleteExpense(expenseId) {
         console.log("in delete func");
         try {
-            await axios.delete(`/users/expenses/${expenseId}`);
+            await axios.delete(`/users/expenses/${expenseId}`,{ 
+                headers: { 'Authorization': `${localStorage.getItem('token')}` }});
             console.log("delte completed")
             fetchAndDisplayExpenses();
         } catch (error) {

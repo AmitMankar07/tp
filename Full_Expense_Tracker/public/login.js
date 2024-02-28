@@ -1,10 +1,25 @@
 document.addEventListener('DOMContentLoaded',()=>{
     
+   // Function to retrieve the token from local storage
+   function getToken() {
+    return localStorage.getItem('token');
+}
+
 function clearFields() {
     document.getElementById('email').value = '';
     document.getElementById('password').value = '';
     console.log("field clear");
 }
+function displayErrorMessage(message) {
+    const errorMessage = document.createElement('p');
+    errorMessage.textContent = '*' + message;
+    errorMessage.style.color = 'red';
+    errorMessage.style.marginTop = '10px';
+    errorMessage.style.fontSize = '12px';
+    document.querySelector('#login-form label[for="email"]').insertAdjacentElement('beforebegin', errorMessage);
+    alert(message);
+}
+
 document.getElementById('email').addEventListener('input', () => {
     const errorMessage = document.querySelector('#login-form p');
     if (errorMessage) {
@@ -28,60 +43,32 @@ document.getElementById('password').addEventListener('input', () => {
            try{
             const response = await axios.post('/users/login',{
                 email,password
-            })
-             console.log(response.data);
-             localStorage.setItem('token',response.data);
+            });
+            const token=response.data;
+             console.log("token in login ",token);
+             console.log("token in login.js",response.data);
+             localStorage.setItem('token',token);
             
             //  const token=JSON.parse(localStorage.getItem('token'));
         
             // If the login is successful, redirect the user to the home page
             if (response.status === 200) {
                 alert('Login Successfull!');
-                
-                const successMessage = document.createElement('p');
-                successMessage.textContent = 'Login successful!';
-                successMessage.style.color = 'green';
-                successMessage.style.marginTop = '10px';
-                document.querySelector('#login-form label[for="email"]').insertAdjacentElement('beforebegin', successMessage);
+            clearFields();
               window.location.href='main.html';
             }
         
           // Clear the email and password fields
-         clearFields();
+         
         
            }catch(error){
             console.log("error:",error);
-                // Display an error message to the user
-                if (error.response.status === 400) { const errorMessage = document.createElement('p');
-                errorMessage.textContent ='*'+ error.response.data.message;
-                errorMessage.style.color = 'red';
-                errorMessage.style.marginTop = '10px';
-                errorMessage.style.fontSize = '12px';
-
-                alert(error.response.data.message);
-                document.querySelector('#login-form label[for="email"]').insertAdjacentElement('beforebegin', errorMessage);
-             
-               
-                  } else if (error.response.status === 404) {
-                 const errorMessage = document.createElement('p');
-                  errorMessage.textContent ='*'+ error.response.data.message;
-                  errorMessage.style.color = 'red';
-                  errorMessage.style.marginTop = '10px';
-                  errorMessage.style.fontSize = '12px';
-
-                  alert(error.response.data.message);
-                  document.querySelector('#login-form label[for="email"]').insertAdjacentElement('beforebegin', errorMessage);
-               
-                  } else if (error.response.status === 401) {const errorMessage = document.createElement('p');
-                  errorMessage.textContent ='*'+ error.response.data.message;
-                  errorMessage.style.color = 'red';
-                  errorMessage.style.marginTop = '10px';
-                  errorMessage.style.fontSize = '12px';
-
-                  alert(error.response.data.message);
-                  document.querySelector('#login-form label[for="email"]').insertAdjacentElement('beforebegin', errorMessage);
-                      }
-           }
+            if (error.response && error.response.data && error.response.data.message) {
+                displayErrorMessage(error.response.data.message);
+            } else {
+                displayErrorMessage('An unexpected error occurred.');
+            } 
+                 }
+           })
         
-})
 });
