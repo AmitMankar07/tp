@@ -9,6 +9,24 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log("Fields cleared");
     }
 
+    document.getElementById('premium').onclick=async function(e){
+        const token=localStorage.getItem('token');
+        const response=await axios.get('http://localhost:3000/users/premium/premiummembership',{headers:{'Authoriztion':token}});
+        console.log(response);
+        var options={
+            "key":response.data.key_id,
+            "order_id":response.data.order.id,
+            "handler":async function (response){
+                await axios.post('http://localhost:3000/users/premium/updatestatus',{
+                    order_id:options.order_id,
+                    payment_id:response.razorpay_payment_id,
+                },{headers:{'Authorization':token}})
+
+                alert('You are Premium User Now')
+            }
+        }
+    };
+
     // Function to fetch and display expenses
     async function fetchAndDisplayExpenses() {
         try {

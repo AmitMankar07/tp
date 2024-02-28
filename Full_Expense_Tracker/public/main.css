@@ -16,7 +16,7 @@ h2 {
 }
 
 form {
-    width: 300px;
+    width: 500px;
     padding: 20px;
     background-color: #fff; /* White background */
     border-radius: 8px;
@@ -29,6 +29,24 @@ label {
     font-size: 16px;
     color: #333; /* Dark gray text */
 }
+#premium {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #f1c40f;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+  }
+  
+  #premium:hover {
+    background-color: #e0b90f;
+  }
 
 input[type="number"],
 input[type="text"],

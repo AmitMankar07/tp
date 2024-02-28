@@ -10,6 +10,10 @@
 </head>
 <body>
     <h2>Expense Tracker</h2>
+    <div style="position: fixed; top: 20px; right: 20px;">
+        <button id="premium">Buy Membership</button>
+    </div>
+
     <div>
         <form action="/users/main" method="post" id="expense-form">
             <div>
@@ -38,5 +42,7 @@
         </form>
     </div>
     <script src="./main.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
 </body>
 </html>
