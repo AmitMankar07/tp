@@ -6,6 +6,8 @@ const userAuthenticate=require('../middleware/auth')
 
 const User=require('../models/user');
 const bcrypt=require('bcrypt');
+const purchaseController=require('../controllers/purchase');
+
 const authenticate = require('../middleware/auth');
 const router=express.Router();
 
@@ -25,5 +27,8 @@ router.delete('/expenses/:id',deleteUserExpenses);
 
 router.put('/expenses/:id',editUserExpenses);
 
+router.get('/premium/premiummembership',authenticate,purchaseController.purchasepremium);
+
+router.post('/premium/updateTransactionStatus',authenticate,purchaseController.updateTransactionStatus);
 
 module.exports=router;

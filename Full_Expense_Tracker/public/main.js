@@ -1,4 +1,7 @@
+
+// const Razorpay = require('razorpay');
 document.addEventListener('DOMContentLoaded', () => {
+
     console.log("Expense Tracker Main JS");
 
     // Function to clear input fields
@@ -11,20 +14,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('premium').onclick=async function(e){
         const token=localStorage.getItem('token');
-        const response=await axios.get('http://localhost:3000/users/premium/premiummembership',{headers:{'Authoriztion':token}});
+        console.log("token in premium:",token);
+        const response=await axios.get('http://localhost:3000/users/premium/premiummembership',{
+            headers:{'Authorization':token}});
+            console.log("get succesful");
         console.log(response);
         var options={
             "key":response.data.key_id,
             "order_id":response.data.order.id,
             "handler":async function (response){
-                await axios.post('http://localhost:3000/users/premium/updatestatus',{
+                await axios.post('http://localhost:3000/users/premium/updateTransactionStatus',{
                     order_id:options.order_id,
                     payment_id:response.razorpay_payment_id,
                 },{headers:{'Authorization':token}})
 
                 alert('You are Premium User Now')
-            }
-        }
+            },
+        };
+        const rzp1=new Razorpay(options);
+        rzp1.open();
+        e.preventDefault();
+
+        rzp1.on('payment.failed',function (response){
+            console.log(response);
+            alert('Something went wrong')
+        });
     };
 
     // Function to fetch and display expenses

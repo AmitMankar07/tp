@@ -1,6 +1,7 @@
 
 const express=require('express');
 const app=express();
+require('dotenv').config();
 
 const path=require('path');
 const cors=require('cors');
@@ -9,7 +10,7 @@ const sequelize=require('./util/db');
 const User=require('./models/user');
 const Expense=require('./models/expense')
 const adminRoutes=require('./routes/adminRoutes');
-
+const Order=require('./models/orders');
 
 
 
@@ -22,6 +23,10 @@ app.use('/users',adminRoutes);
 
 User.hasMany(Expense,{ foreignKey: 'userId' });
 Expense.belongsTo(User);
+
+User.hasMany(Order);
+Order.belongsTo(User);
+
 
 sequelize.sync().then(
     ()=>{
