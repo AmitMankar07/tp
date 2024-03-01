@@ -31,7 +31,7 @@ document.getElementById('signup-form').addEventListener('submit', async (event) 
      try {
         const response = await axios.post('/users/signup', { name, email, password });
         console.log(response.data);
-        
+        alert('Sign Up Successfull!');
         clearFields();
         console.log("function");
     } catch (error) {

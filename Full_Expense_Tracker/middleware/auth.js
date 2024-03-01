@@ -14,10 +14,11 @@ console.log(token);
         // Verify the token using the secret key
         const decodedToken = jwt.verify(token, 'secretkey');
         const userId = decodedToken.userId;
-
+        
         console.log('userID>>>>',userId);
           // Check if user exists
           const user = await User.findByPk(userId);
+          req.user=user;
           if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }

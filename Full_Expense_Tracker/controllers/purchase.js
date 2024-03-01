@@ -27,7 +27,7 @@ const purchasepremium = async (req, res) => {
         orderid: order.id,
         amount: order.amount,
         currency: order.currency,
-        status: order.status,
+        status: "PENDING",
         userId:req.user.id,
       });
   
@@ -69,9 +69,11 @@ const purchasepremium = async (req, res) => {
         order.update({ paymentid: payment_id, status: 'SUCCESSFULL' ,userid: userid}),
         user.update({ ispremiumuser: true })
       ]);
-  
+  // Send the isPremiumUser property as part of the response
+  // const updatedUser = await user.findOne({ where: { id: user.id } });
+   
       console.log("Transaction updated successfully");
-      return res.status(201).json({ success: true, message: "Transaction Successfull!" });
+      return res.status(200).json({ success: true, message: "Transaction Successfull!"  });
     } catch (err) {
       console.error("Error in updateTransactionStatus:", err);
       return res.status(500).json({ success: false, message: "Server Error" });

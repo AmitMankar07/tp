@@ -1,8 +1,10 @@
 
-// const Razorpay = require('razorpay');
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded',async () => {
 
+// const user=response.data;
+// console.log("USer:",user);
     console.log("Expense Tracker Main JS");
+    
 
     // Function to clear input fields
     function clearFields() {
@@ -11,14 +13,48 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('category').value = '';
         console.log("Fields cleared");
     }
+// Check if the user is a premium user and update UI accordingly
+async function checkPremiumUser() {
+    const token = localStorage.getItem('token');
+    try {
+        const response = await axios.get('http://localhost:3000/users/premium/premiummembership', {
+            headers: { 'Authorization': token }
+        });
+        // If the user is a premium user, hide the premium button and display a message
+        const isPremium = response.data.isPremiumUser;
+        console.log("isPremium in main:",isPremium);
+        if (isPremium) {
+            const premiumButton = document.getElementById('premium');
+            premiumButton.style.display = 'none';
+            // Create a new button or display a message for premium users
+            const premiumUserMessage = document.createElement('p');
+            premiumUserMessage.innerHTML = '<h3>Premium User</h3>';
+            premiumButton.parentNode.insertBefore(premiumUserMessage, premiumButton.nextSibling);
+        }
+    } catch (error) {
+        console.log("Error:", error);
+        // Handle error
+    }
+}
+
+// Call checkPremiumUser function when DOM content is loaded
+await checkPremiumUser();
 
     document.getElementById('premium').onclick=async function(e){
+        
         const token=localStorage.getItem('token');
         console.log("token in premium:",token);
-        const response=await axios.get('http://localhost:3000/users/premium/premiummembership',{
+        try{
+            const response=await axios.get('http://localhost:3000/users/premium/premiummembership',{
             headers:{'Authorization':token}});
+
+            // console.log("user.ispremiumuser",user.ispremiumuser);
+            // If the user is already a premium member, display a message
+            
+
             console.log("get succesful");
         console.log(response);
+    
         var options={
             "key":response.data.key_id,
             "order_id":response.data.order.id,
@@ -28,7 +64,23 @@ document.addEventListener('DOMContentLoaded', () => {
                     payment_id:response.razorpay_payment_id,
                 },{headers:{'Authorization':token}})
 
-                alert('You are Premium User Now')
+                // isPremiumUser = true; 
+                alert('You are Premium User Now');
+                (async function() {
+                    await checkPremiumUser();
+                })();
+                const leaderboardButton = document.createElement('button');
+                leaderboardButton.id = 'leaderboard';
+                leaderboardButton.textContent = 'Leaderboard';
+
+                leaderboardButton.addEventListener('click', () => {
+                        // Handle leaderboard button click
+                    });
+
+                const premiumButton = document.getElementById('premium');
+                premiumButton.parentNode.insertBefore(leaderboardButton, premiumButton.nextSibling);
+
+              
             },
         };
         const rzp1=new Razorpay(options);
@@ -39,6 +91,11 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log(response);
             alert('Something went wrong')
         });
+        }catch(error){
+            console.log("Error:",error);
+            alert('Error while processing request');
+        }
+        
     };
 
     // Function to fetch and display expenses

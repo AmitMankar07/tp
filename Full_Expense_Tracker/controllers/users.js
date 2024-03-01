@@ -54,6 +54,10 @@ const postUserLogin=async(req,res,next)=>{
           return;
         }
         const token=jwt.sign({userId:user.id},'secretkey');
+        console.log("token login:",token);
+        const isPremiumUser=user.ispremiumuser;
+        console.log("isprmiumuser:",isPremiumUser);
+
         res.status(200).json(token);
       } catch (error) {
         console.error(error);
