@@ -256,6 +256,7 @@ function parseJwt (token) {
         }
     }
     
+    
     // Function to clear input fields
     function clearFields() {
         document.getElementById('amount').value = '';
