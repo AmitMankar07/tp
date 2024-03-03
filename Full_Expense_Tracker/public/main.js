@@ -1,4 +1,7 @@
 
+const btnLeaderBoard = document.getElementById("btn_leader_board");
+const leaderBoardTitle = document.getElementById("leader_board_title");
+const leaderBoardList = document.getElementById("leader_board_list");
 
 window.addEventListener('DOMContentLoaded',async () => {
     const token=localStorage.getItem('token');
@@ -61,7 +64,40 @@ function parseJwt (token) {
     //         btnDownloadHistory.style.display = "inline-block";
     //     }
     // };
-
+    btnLeaderBoard.onclick = async () => {
+        try {
+            leaderBoardTitle.textContent = "Leader Board";
+            const response = await axios.get("http://localhost:3000/premium/showleaderboard",
+                { headers: { Authorization: token } }
+            );
+            const data = response.data;
+            showTotalExpense(data)
+            leaderBoardList.innerHTML = "";
+            for (let i = 0; i < data.length; i++) {
+                showLeaderBoard(data[i]);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    
+    };
+    btnLeaderBoard.onclick = async () => {
+        try {
+            leaderBoardTitle.textContent = "Leader Board";
+            const response = await axios.get("http://localhost:3000/premium/showleaderboard",
+                { headers: { Authorization: token } }
+            );
+            const data = response.data;
+            // showTotalExpense(data)
+            leaderBoardList.innerHTML = "";
+            for (let i = 0; i < data.length; i++) {
+                showLeaderBoard(data[i]);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    
+    };
 
 
     document.getElementById('premium').onclick=async function(e){
