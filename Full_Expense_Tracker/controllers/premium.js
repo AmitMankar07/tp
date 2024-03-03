@@ -6,6 +6,16 @@ const S3services = require("../services/s3services");
 const jwt = require("jsonwebtoken");
 
 
+
+
+exports.getAllDownloadHistory = async (req, res) => {
+    try {
+        const downloadHistory = await UserServices.getAllDownloadHistory(req);
+        res.status(200).json({ downloadHistory, success: true });
+    } catch (error) {
+        res.status(500).json({ message: error, success: false });
+    }
+};
 exports.showLeaderBoard = async (req, res) => {
     try {
         const leaderBoardOfUsers = await Users.findAll({
@@ -25,7 +35,6 @@ exports.showLeaderBoard = async (req, res) => {
         console.log(error);
     }
 };
-
 exports.downloadExpenses = async (req, res) => {
     try {
         const expenses = await UserServices.getExpenses(req);
@@ -38,14 +47,5 @@ exports.downloadExpenses = async (req, res) => {
     } catch (error) {
         console.log(error)
         res.status(500).json({ fileURL: "", success: false, message: error });
-    }
-};
-
-exports.getAllDownloadHistory = async (req, res) => {
-    try {
-        const downloadHistory = await UserServices.getAllDownloadHistory(req);
-        res.status(200).json({ downloadHistory, success: true });
-    } catch (error) {
-        res.status(500).json({ message: error, success: false });
     }
 };
