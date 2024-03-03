@@ -35,6 +35,7 @@ exports.showLeaderBoard = async (req, res) => {
         console.log(error);
     }
 };
+
 exports.downloadExpenses = async (req, res) => {
     try {
         const expenses = await UserServices.getExpenses(req);
