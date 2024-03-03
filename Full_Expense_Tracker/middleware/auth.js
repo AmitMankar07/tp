@@ -6,15 +6,15 @@ const authenticate=async(req,res,next)=>{
 
     try {
         const token = req.header('Authorization');
-console.log(token);
+console.log("in auth token",token);
     // Check if token is missing
     if (!token) {
         return res.status(401).json({ message: 'Access denied. Token missing.' });
     }
         // Verify the token using the secret key
-        const decodedToken = jwt.verify(token, 'secretkey');
+        const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
         const userId = decodedToken.userId;
-        
+        console.log("token in auth:",decodedToken);
         console.log('userID>>>>',userId);
           // Check if user exists
           const user = await User.findByPk(userId);
@@ -24,7 +24,7 @@ console.log(token);
         }
          // Attach the user object to the request
          req.user = user;
-
+        console.log("auth done and sedn to next")
          // Continue to the next middleware
          next();
 

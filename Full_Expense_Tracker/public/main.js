@@ -1,56 +1,81 @@
 
-document.addEventListener('DOMContentLoaded',async () => {
 
+window.addEventListener('DOMContentLoaded',async () => {
+    const token=localStorage.getItem('token');
+
+function parseJwt (token) {
+    if(!token){
+        return null;
+    }
+    console.log("token in parsejwt",token);
+    // var base64Url = token;
+    var base64Url = token.split('.')[1];
+    console.log("base64url:",base64Url);
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+}
+
+
+   
+    const decodeToken=parseJwt(token);
+    console.log("decodetoken in main.js:",decodeToken);
+    const isPremiumUser=decodeToken.ispremiumuser;
+    console.log(isPremiumUser);
+    
+    if (decodeToken.ispremiumuser) {
+        document.getElementById('premium').style.display = 'none';
+        document.getElementById('premiumuser').style.display = 'block';
+    } else {
+        document.getElementById('premium').style.display = 'block';
+        document.getElementById('premiumuser').style.display = 'none';
+    }
+    // Function to check if user is a premium member
+    
+      // Call checkPremiumUser after user logs in or reloads the page
+     
+ 
 // const user=response.data;
 // console.log("USer:",user);
     console.log("Expense Tracker Main JS");
     
+    // const ispremium = async (e) => {
+    //     const response = await axios.get(
+    //         "http://localhost:3000/user/premium/premiummembership",
+    //         {
+    //             headers: { Authorization: token },
+    //         }
+    //     );
+    //     const premiumuser = response.data.ispremiumuser;
+    //     localStorage.setItem("pro", premiumuser);
+    //     if (response.data.ispremiumuser) {
+    //         btnBuyPremium.remove();
+    //         const premiumUser = document.createElement("h3");
+    //         premiumUser.textContent = "Premium Member";
+    //         premium.appendChild(premiumUser);
+    //         btnLeaderBoard.style.display = "inline-block";
+    //         downloadButton.style.display = "inline-block";
+    //         btnDownloadHistory.style.display = "inline-block";
+    //     }
+    // };
 
-    // Function to clear input fields
-    function clearFields() {
-        document.getElementById('amount').value = '';
-        document.getElementById('description').value = '';
-        document.getElementById('category').value = '';
-        console.log("Fields cleared");
-    }
-// Check if the user is a premium user and update UI accordingly
-async function checkPremiumUser() {
-    const token = localStorage.getItem('token');
-    try {
-        const response = await axios.get('http://localhost:3000/users/premium/premiummembership', {
-            headers: { 'Authorization': token }
-        });
-        // If the user is a premium user, hide the premium button and display a message
-        const isPremium = response.data.isPremiumUser;
-        console.log("isPremium in main:",isPremium);
-        if (isPremium) {
-            const premiumButton = document.getElementById('premium');
-            premiumButton.style.display = 'none';
-            // Create a new button or display a message for premium users
-            const premiumUserMessage = document.createElement('p');
-            premiumUserMessage.innerHTML = '<h3>Premium User</h3>';
-            premiumButton.parentNode.insertBefore(premiumUserMessage, premiumButton.nextSibling);
-        }
-    } catch (error) {
-        console.log("Error:", error);
-        // Handle error
-    }
-}
 
-// Call checkPremiumUser function when DOM content is loaded
-await checkPremiumUser();
 
     document.getElementById('premium').onclick=async function(e){
         
-        const token=localStorage.getItem('token');
+       
         console.log("token in premium:",token);
+        // if (!token || parseJwt(token).ispremiumuser) {
+        //     // Handle user not being a premium member
+        //     return;
+        // }
         try{
+            console.log("Making request to get premium membership...");
             const response=await axios.get('http://localhost:3000/users/premium/premiummembership',{
             headers:{'Authorization':token}});
-
-            // console.log("user.ispremiumuser",user.ispremiumuser);
-            // If the user is already a premium member, display a message
-            
 
             console.log("get succesful");
         console.log(response);
@@ -64,22 +89,17 @@ await checkPremiumUser();
                     payment_id:response.razorpay_payment_id,
                 },{headers:{'Authorization':token}})
 
-                // isPremiumUser = true; 
-                alert('You are Premium User Now');
-                (async function() {
-                    await checkPremiumUser();
-                })();
-                const leaderboardButton = document.createElement('button');
-                leaderboardButton.id = 'leaderboard';
-                leaderboardButton.textContent = 'Leaderboard';
-
-                leaderboardButton.addEventListener('click', () => {
-                        // Handle leaderboard button click
-                    });
-
-                const premiumButton = document.getElementById('premium');
-                premiumButton.parentNode.insertBefore(leaderboardButton, premiumButton.nextSibling);
-
+                 alert('You are Premium User Now');
+                 const premiumMessage = document.createElement('p');
+                 premiumMessage.textContent = 'PREMIUM USER';
+                 const premiumButton = document.getElementById('premium');
+                 premiumButton.parentNode.insertBefore(premiumMessage, premiumButton.nextSibling);
+                 premiumButton.style.display = 'none';
+                //  ispremium();
+                // document.getElementById('premium').style.visibility='hidden';
+                document.getElementById('premiumuser').innerHTML="PREMIUM USER";
+                localStorage.setItem('token',res.data.token);
+                console.log("updated token:",res.data.token);   
               
             },
         };
@@ -199,6 +219,16 @@ await checkPremiumUser();
             console.error(error);
         }
     }
+    
+    // Function to clear input fields
+    function clearFields() {
+        document.getElementById('amount').value = '';
+        document.getElementById('description').value = '';
+        document.getElementById('category').value = '';
+        console.log("Fields cleared");
+    }
+    
+
 
     // Add event listener for form submission
     const expenseForm = document.getElementById('expense-form');

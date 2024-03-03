@@ -31,4 +31,5 @@ router.get('/premium/premiummembership',authenticate,purchaseController.purchase
 
 router.post('/premium/updateTransactionStatus',authenticate,purchaseController.updateTransactionStatus);
 
+router.get('/premium/showleaderboard')
 module.exports=router;

@@ -105,6 +105,19 @@ const editUserExpenses = async (req, res, next) => {
         res.status(500).json({ message: 'Failed to update expense' });
     }
 };
+exports.checkMembership = async(req,res,next)=>{
+    const userId = req.body.userId
+
+    User.findOne({where:{id:userId}})
+    .then(async data=>{
+        const user = await User.findByPk(userId);
+        res.json({premium:data.isPremium,rowPreference:user.rowPreference})
+    });
+} 
+
+exports.isPremiumUser = (req, res) => {
+    return res.status(202).json(req.user.isPremium);
+};
 
 
 module.exports={postUserExpenses,getUserExpense,editUserExpenses,deleteUserExpenses,getAllExpenses};

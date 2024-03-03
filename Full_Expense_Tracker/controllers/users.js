@@ -32,6 +32,9 @@ const postSignUp=async(req,res,next)=>{
 
    }
 };
+const generateAccessToken=(id,name,ispremiumuser)=>{
+return jwt.sign({userId:id,name:name,ispremiumuser},'secretkey');
+}
 
 const postUserLogin=async(req,res,next)=>{
     try {
@@ -53,11 +56,11 @@ const postUserLogin=async(req,res,next)=>{
           res.status(401).json({ message: 'Invalid password' });
           return;
         }
-        const token=jwt.sign({userId:user.id},'secretkey');
-        console.log("token login:",token);
-        const isPremiumUser=user.ispremiumuser;
-        console.log("isprmiumuser:",isPremiumUser);
 
+        console.log("user.ispremiumuser",user.ispremiumuser)
+        const token=jwt.sign({userId:user.id,name:user.name,ispremiumuser:user.ispremiumuser},'secretkey');
+        console.log("token login:",token);
+        
         res.status(200).json(token);
       } catch (error) {
         console.error(error);
@@ -66,4 +69,4 @@ const postUserLogin=async(req,res,next)=>{
 };
 
 
-module.exports={postSignUp,postUserLogin};
+module.exports={postSignUp,postUserLogin,generateAccessToken};
