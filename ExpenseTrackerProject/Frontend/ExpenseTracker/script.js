@@ -164,6 +164,20 @@ const showTotalExpense = (data) => {
     totalexpense.textContent = `Your Total Expenses: ${userId[0].totalExpenses}`;
 }
 
+const showExpenses = async (page) => {
+    try {
+        const numberOfRows = localStorage.getItem("rows") || 10;
+
+        const response = await axios.get(`http://localhost:3000/expenses/getexpenses`, { page, numberOfRows },
+            { headers: { "Authorization": token } }
+        );
+        listExpenses(response.data.Expenses);
+        showpagination(response.data);
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 const showpagination = ({
     currentPage,
     hasNextPage,
@@ -195,20 +209,6 @@ const showpagination = ({
         btn4.innerHTML = lastPage;
         btn4.addEventListener("click", () => showExpenses(lastPage));
         pagination.appendChild(btn4);
-    }
-}
-
-const showExpenses = async (page) => {
-    try {
-        const numberOfRows = localStorage.getItem("rows") || 10;
-
-        const response = await axios.get(`http://localhost:3000/expenses/getexpenses`, { page, numberOfRows },
-            { headers: { "Authorization": token } }
-        );
-        listExpenses(response.data.Expenses);
-        showpagination(response.data);
-    } catch (error) {
-        console.log(error)
     }
 }
 

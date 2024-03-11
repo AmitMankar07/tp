@@ -11,6 +11,7 @@ const handleSubmit = async (e) => {
             alert(res.data.msg);
         }).catch((err) => {
             console.log(err)
+            
         });
 
     document.getElementById("email").value = "";
