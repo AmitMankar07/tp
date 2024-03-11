@@ -13,8 +13,18 @@ const postUserExpenses=async (req,res,next)=>{
         const decodedToken = jwt.verify(token, 'secretkey'); // Verify token
         const userId = decodedToken.userId;
 
-        const expense = await expenses.create({ amount, description, category, userId });
-        res.status(201).json(expense);
+        const expense = await expenses.create({ amount, description, category, userId }).then(expense=>{
+            const totalExpense=Number(req.user.totalExpense)+Number(amount)
+            console.log(totalExpense);
+        users.update({
+            totalExpense:totalExpense
+        },{
+            where:{id:req.user.id}
+        }).then(async()=>{
+            res.status(201).json({expense:expense});
+        })
+        });
+
     }catch (error) {
         console.error('Error adding expense',error);
         res.status(500).json({ message: 'Failed to add expense' });

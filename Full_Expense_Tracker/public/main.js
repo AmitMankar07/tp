@@ -3,9 +3,6 @@ const btnLeaderBoard = document.getElementById("btn_leader_board");
 const leaderBoardTitle = document.getElementById("leader_board_title");
 const leaderBoardList = document.getElementById("leader_board_list");
 
-window.addEventListener('DOMContentLoaded',async () => {
-    const token=localStorage.getItem('token');
-
 function parseJwt (token) {
     if(!token){
         return null;
@@ -22,7 +19,8 @@ function parseJwt (token) {
     return JSON.parse(jsonPayload);
 }
 
-
+window.addEventListener('DOMContentLoaded',async () => {
+    const token=localStorage.getItem('token');
    
     const decodeToken=parseJwt(token);
     console.log("decodetoken in main.js:",decodeToken);
@@ -31,10 +29,13 @@ function parseJwt (token) {
     
     if (decodeToken.ispremiumuser) {
         document.getElementById('premium').style.display = 'none';
-        document.getElementById('premiumuser').style.display = 'block';
+        // document.getElementById('premiumuser').style.display = 'block';
+        document.getElementById('premiummessage').style.display='block';
+        document.getElementById('btn_leader_board').style.display='block';
+        
     } else {
         document.getElementById('premium').style.display = 'block';
-        document.getElementById('premiumuser').style.display = 'none';
+        document.getElementById('premiummessage').style.display = 'none';
     }
     // Function to check if user is a premium member
     
@@ -45,49 +46,15 @@ function parseJwt (token) {
 // console.log("USer:",user);
     console.log("Expense Tracker Main JS");
     
-    // const ispremium = async (e) => {
-    //     const response = await axios.get(
-    //         "http://localhost:3000/user/premium/premiummembership",
-    //         {
-    //             headers: { Authorization: token },
-    //         }
-    //     );
-    //     const premiumuser = response.data.ispremiumuser;
-    //     localStorage.setItem("pro", premiumuser);
-    //     if (response.data.ispremiumuser) {
-    //         btnBuyPremium.remove();
-    //         const premiumUser = document.createElement("h3");
-    //         premiumUser.textContent = "Premium Member";
-    //         premium.appendChild(premiumUser);
-    //         btnLeaderBoard.style.display = "inline-block";
-    //         downloadButton.style.display = "inline-block";
-    //         btnDownloadHistory.style.display = "inline-block";
-    //     }
-    // };
     btnLeaderBoard.onclick = async () => {
         try {
-            leaderBoardTitle.textContent = "Leader Board";
+            leaderBoardTitle.textContent = "Leader Board:";
+            console.log("token in leaderboard",token)
             const response = await axios.get("http://localhost:3000/premium/showleaderboard",
                 { headers: { Authorization: token } }
             );
             const data = response.data;
-            showTotalExpense(data)
-            leaderBoardList.innerHTML = "";
-            for (let i = 0; i < data.length; i++) {
-                showLeaderBoard(data[i]);
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    
-    };
-    btnLeaderBoard.onclick = async () => {
-        try {
-            leaderBoardTitle.textContent = "Leader Board";
-            const response = await axios.get("http://localhost:3000/premium/showleaderboard",
-                { headers: { Authorization: token } }
-            );
-            const data = response.data;
+            console.log("data in leaderboard js ",data)
             // showTotalExpense(data)
             leaderBoardList.innerHTML = "";
             for (let i = 0; i < data.length; i++) {
@@ -98,6 +65,37 @@ function parseJwt (token) {
         }
     
     };
+    const showLeaderBoard = (obj) => {
+        const li = document.createElement("li");
+        li.className = "list-group-item";
+        li.textContent =
+            "Name" +
+            " - " +
+            obj.name +
+            " " +
+            " " +
+            "Total Expenses" +
+            " - " +
+            obj.totalExpense;
+        leaderBoardList.appendChild(li);
+    }
+    // btnLeaderBoard.onclick = async () => {
+    //     try {
+    //         leaderBoardTitle.textContent = "Leader Board";
+    //         const response = await axios.get("http://localhost:3000/premium/showleaderboard",
+    //             { headers: { Authorization: token } }
+    //         );
+    //         const data = response.data;
+    //         // showTotalExpense(data)
+    //         leaderBoardList.innerHTML = "";
+    //         for (let i = 0; i < data.length; i++) {
+    //             showLeaderBoard(data[i]);
+    //         }
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    
+    // };
 
 
     document.getElementById('premium').onclick=async function(e){
@@ -126,14 +124,14 @@ function parseJwt (token) {
                 },{headers:{'Authorization':token}})
 
                  alert('You are Premium User Now');
-                 const premiumMessage = document.createElement('p');
-                 premiumMessage.textContent = 'PREMIUM USER';
-                 const premiumButton = document.getElementById('premium');
-                 premiumButton.parentNode.insertBefore(premiumMessage, premiumButton.nextSibling);
-                 premiumButton.style.display = 'none';
+                 document.getElementById('premium').style.display = 'none';
+
+                 document.getElementById('premiummessage').style.display='block';
+                 document.getElementById('btn_leader_board').style.display='block';
+        
                 //  ispremium();
                 // document.getElementById('premium').style.visibility='hidden';
-                document.getElementById('premiumuser').innerHTML="PREMIUM USER";
+
                 localStorage.setItem('token',res.data.token);
                 console.log("updated token:",res.data.token);   
               

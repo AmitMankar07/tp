@@ -15,18 +15,6 @@ const purchasepremium = async (req, res) => {
     }
 
           try {
-            const decodedToken = jwt.verify(token, 'secretkey');
-        const userId = decodedToken.userId;
-
-        // Fetch the user based on the userId from the decoded token
-        const user = await User.findByPk(userId);
-        req.user = user;
-
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        } if (user.ispremiumuser) {
-          return res.status(400).json({ message: 'User is already a premium user.' });
-      }
       const rzp = new Razorpay({
         key_id: process.env.RAZORPAY_KEY_ID,
         key_secret: process.env.RAZORPAY_KEY_SECRET,
@@ -34,9 +22,8 @@ const purchasepremium = async (req, res) => {
      // Obtain token from request headers
     
       console.log("values if configured");
-       const decoded = jwt.verify(token, 'secretkey');
-
-      const amount = 100;
+      
+      const amount = 2500;
   
     //    rzp.orders.create({
     //     amount,
@@ -124,9 +111,10 @@ const purchasepremium = async (req, res) => {
       ]);
   // Send the isPremiumUser property as part of the response
   // const updatedUser = await user.findOne({ where: { id: user.id } });
-   
+  // ,token:userController.generateAccessToken(userid,undefined,true) 
+     
+      return res.status(200).json({ success: true, message: "Transaction Successfull!" });
       console.log("Transaction updated successfully");
-      return res.status(200).json({ success: true, message: "Transaction Successfull!",token:userController.generateAccessToken(userid,undefined,true)  });
     } catch (err) {
       console.error("Error in updateTransactionStatus:", err);
       return res.status(500).json({ success: false, message: "Server Error" });

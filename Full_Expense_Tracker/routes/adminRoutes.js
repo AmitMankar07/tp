@@ -7,6 +7,7 @@ const userAuthenticate=require('../middleware/auth')
 const User=require('../models/user');
 const bcrypt=require('bcrypt');
 const purchaseController=require('../controllers/purchase');
+const premiumController = require('../controllers/premium');
 
 const authenticate = require('../middleware/auth');
 const router=express.Router();
@@ -31,6 +32,6 @@ router.get('/premium/premiummembership',authenticate,purchaseController.purchase
 
 router.post('/premium/updateTransactionStatus',authenticate,purchaseController.updateTransactionStatus);
 
-router.get("/premium/showleaderboard", authenticate, premiumController.showLeaderBoard);
+// router.get('/premium/showleaderboard', authenticate, premiumController.showLeaderBoard);
 
 module.exports=router;

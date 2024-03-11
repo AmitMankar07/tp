@@ -10,13 +10,24 @@
    
 </head>
 <body>
-    <h2>Expense Tracker</h2>
-    <div style="position: fixed; top: 20px; right: 20px;">
-        <button id="premium">Buy Membership</button>
+    
+    <div id="navbar">
+        <div class="navbar-text">
+            <h2>Expense Tracker</h2>
+            <p id="premiummessage">Premium User</p>
+            
+        </div>
+        <div class="navbar-buttons">
+            
+    <button id="btn_leader_board" hidden>LeaderBoard</button>
+    <button id="premium">Buy Membership</button> 
+            <button>Sign Out</button>
+        </div>
     </div>
-    <div style="position: fixed; top: 20px; right: 20px;" >
-       <h3 id="premiumuser"></h3>
-    </div>
+    <!-- <div style="position: fixed; top: 20px; right: 20px;">
+        <button id="premium">Buy Membership</button>    -->
+    <!-- </div>  -->
+
     <div>
         <form action="/users/main" method="post" id="expense-form">
             <div>
@@ -37,26 +48,19 @@
                     <option id="movies">movies</option>
                     <option id="Grocery">Grocery</option>
                 </select>
+
+                <h2>User Expenses:</h2>
                 <ul id="items">
                     <li></li>
                 </ul>
+                <h2 id="leader_board_title"></h2>
+                <ul id="leader_board_list" class="list-group"></ul>
             </div>
             <button id="submit" type="submit">Add Expense</button>
         </form>
     </div>
-    <div class="container">
-        <div class="card-body">
-            <button id="totalexpense" class="btn btn-primary text-white"
-                style="background-color: rgb(104, 104, 104)" hidden>
-            </button>
-            <button class="btn btn-outline-warning" id="btn_leader_board" hidden>
-                Show Leader Board
-            </button>
-            <br />
-            <h2 class="title" id="leader_board_title"></h2>
-            <ul id="leader_board_list" class="list-group"></ul>
-        </div>
-    </div>
+
+
 
     <div class="container" id="download_history_container">
         <div class="card card-body">

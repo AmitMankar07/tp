@@ -10,6 +10,7 @@ const sequelize=require('./util/db');
 const User=require('./models/user');
 const Expense=require('./models/expense')
 const adminRoutes=require('./routes/adminRoutes');
+const premiumRoutes=require('./routes/premium');
 const Order=require('./models/orders');
 
 
@@ -20,6 +21,7 @@ app.use(express.static('./public'));
 app.use(cors());
 app.use(express.json());
 app.use('/users',adminRoutes);
+app.use('/premium',premiumRoutes);
 
 User.hasMany(Expense,{ foreignKey: 'userId' });
 Expense.belongsTo(User);
