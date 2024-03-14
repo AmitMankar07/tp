@@ -57,10 +57,12 @@ const postUserLogin=async(req,res,next)=>{
           return;
         }
 
-        console.log("user.ispremiumuser",user.ispremiumuser)
-        const token=jwt.sign({userId:user.id,name:user.name,ispremiumuser:user.ispremiumuser},'secretkey');
-        console.log("token login:",token);
+        // console.log("user.ispremiumuser",user.ispremiumuser)
+        // const token=jwt.sign({userId:user.id,name:user.name,ispremiumuser:user.ispremiumuser},'secretkey');
+        // console.log("token login:",token);
         
+        const token = generateAccessToken(user.id, user.name, user.ispremiumuser);
+
         res.status(200).json(token);
       } catch (error) {
         console.error(error);

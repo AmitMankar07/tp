@@ -68,8 +68,12 @@ const purchasepremium = async (req, res) => {
               status: "PENDING",
               userId: req.user.id,
           });
+            // Generate a new token reflecting the user's premium status
+            const updatedUser = await User.findOne({ where: { id: req.user.id } });
+            const newToken = userController.generateAccessToken(updatedUser.id, updatedUser.name, updatedUser.ispremiumuser);
 
-          return res.status(201).json({ order, key_id: rzp.key_id });
+
+          return res.status(201).json({ order, key_id: rzp.key_id , token: newToken});
       } catch (err) {
           console.log(err);
           return res.status(500).json({ message: "error saving order details" });
@@ -112,8 +116,11 @@ const purchasepremium = async (req, res) => {
   // Send the isPremiumUser property as part of the response
   // const updatedUser = await user.findOne({ where: { id: user.id } });
   // ,token:userController.generateAccessToken(userid,undefined,true) 
-     
-      return res.status(200).json({ success: true, message: "Transaction Successfull!" });
+  const updatedUser = await User.findOne({ where: { id: user.id } });
+  const newToken = userController.generateAccessToken(updatedUser.id, updatedUser.name, updatedUser.ispremiumuser);
+  // const newToken = userController.generateAccessToken(user.id, user.name, user.ispremiumuser);
+
+      return res.status(200).json({ success: true, message: "Transaction Successfull!",token:newToken });
       console.log("Transaction updated successfully");
     } catch (err) {
       console.error("Error in updateTransactionStatus:", err);

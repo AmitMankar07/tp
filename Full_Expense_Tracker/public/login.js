@@ -1,6 +1,19 @@
 document.addEventListener('DOMContentLoaded',()=>{
-    
-   // Function to retrieve the token from local storage
+    const btnForgotPassword=document.getElementById('btn_forgot_password');
+ 
+ function handleForgotClick() {
+    window.location.href = '../ForgetPassword/index.html'; // Adjust the path as per your file structure
+}
+
+btnForgotPassword.addEventListener("click", handleForgotClick);
+   const btnSignUp = document.getElementById("btn_SignUp");
+
+   function handleSignupClick() {
+       window.location.href = "./signup.html"; // Adjust the path as per your file structure
+   }
+
+   btnSignUp.addEventListener("click", handleSignupClick);
+   
    function getToken() {
     return localStorage.getItem('token');
 }

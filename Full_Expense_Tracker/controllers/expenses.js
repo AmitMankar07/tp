@@ -1,35 +1,76 @@
 const expenses=require('../models/expense');
 const users=require('../models/user');
 const jwt=require('jsonwebtoken');
-
-const postUserExpenses=async (req,res,next)=>{
-    try{
-        const { amount, description, category } = req.body;
-        const token = req.headers.authorization; // Extract token from headers
-        console.log('Token:', token);
-        if (!token) {
-            throw new Error('Token missing');
-        }
-        const decodedToken = jwt.verify(token, 'secretkey'); // Verify token
-        const userId = decodedToken.userId;
-
-        const expense = await expenses.create({ amount, description, category, userId }).then(expense=>{
-            const totalExpense=Number(req.user.totalExpense)+Number(amount)
-            console.log(totalExpense);
-        users.update({
-            totalExpense:totalExpense
-        },{
-            where:{id:req.user.id}
-        }).then(async()=>{
-            res.status(201).json({expense:expense});
-        })
-        });
-
-    }catch (error) {
-        console.error('Error adding expense',error);
-        res.status(500).json({ message: 'Failed to add expense' });
+const sequelize=require('../util/db');
+const postUserExpenses = async (req, res, next) => {
+    const t = await sequelize.transaction();
+    try {
+      const { amount, description, category } = req.body;
+      const token = req.headers.authorization;
+      console.log("Token:", token);
+      if (!token) {
+        throw new Error("Token missing");
+      }
+      const decodedToken = jwt.verify(token, "secretkey");
+      const userId = decodedToken.userId;
+  
+      const expense = await expenses.create(
+        { amount, description, category, userId },
+        { transaction: t }
+      );
+  
+      const totalExpense = Number(req.user.totalExpense) + Number(amount);
+      console.log(totalExpense);
+  
+      await users.update(
+        { totalExpense: totalExpense },
+        { where: { id: req.user.id }, transaction: t }
+      );
+  
+      await t.commit();
+      res.status(201).json({ expense: expense });
+    } catch (error) {
+      await t.rollback();
+      console.error("Error adding expense", error);
+      res.status(500).json({ message: "Failed to add expense" });
     }
-};
+  };
+// const postUserExpenses=async (req,res,next)=>{
+//     const t=sequelize.transaction();
+//     try{
+        
+//         const { amount, description, category } = req.body;
+//         const token = req.headers.authorization; // Extract token from headers
+//         console.log('Token:', token);
+//         if (!token) {
+//             throw new Error('Token missing');
+//         }
+//         const decodedToken = jwt.verify(token, 'secretkey'); // Verify token
+//         const userId = decodedToken.userId;
+
+//         const expense = await expenses.create({ amount, description, category, userId },{transaction:t}).then(expense=>{
+//             const totalExpense=Number(req.user.totalExpense)+Number(amount)
+//             console.log(totalExpense);
+//         users.update({
+//             totalExpense:totalExpense
+//         },{
+//             where:{id:req.user.id},transaction:t
+//         }).then(async()=>{
+//             t.commit();
+//             res.status(201).json({expense:expense});
+//         }).catch(async(err)=>{
+//             t.rollback();
+//             return res.status(500).json({success:false,error:err});
+
+//         })
+//         });
+
+//     }catch (error) {
+//         t.rollback();
+//         console.error('Error adding expense',error);
+//         res.status(500).json({ message: 'Failed to add expense' });
+//     }
+// };
 
 const getUserExpense = async (req, res, next) => {
     try {
@@ -65,6 +106,7 @@ const getAllExpenses=async (req,res,next)=>{
 
 
 const deleteUserExpenses = async (req, res, next) => {
+    const t=await sequelize.transaction();
     try {
         const { id } = req.params; // Extract expense ID from request parameters
        
@@ -78,7 +120,7 @@ const deleteUserExpenses = async (req, res, next) => {
         const decodedToken = jwt.verify(token, 'secretkey'); // Verify token
         const userId = decodedToken.userId;
 
-        const deletedExpense = await expenses.findByPk(id); // Find expense by ID
+        const deletedExpense = await expenses.findByPk(id,{transaction:t}); // Find expense by ID
         if (!deletedExpense) {
             return res.status(404).json({ message: 'Expense not found' });
         }
@@ -86,9 +128,19 @@ const deleteUserExpenses = async (req, res, next) => {
         if (deletedExpense.userId !== userId) {
             return res.status(403).json({ message: 'Forbidden: User ID does not match' });
         }
-        await deletedExpense.destroy(); // Delete the expense
+        const user = await users.findByPk(userId, { transaction: t });
+        const totalExpense = Number(user.totalExpense) - Number(deletedExpense.amount);
+    
+        await users.update(
+          { totalExpense: totalExpense },
+          { where: { id: userId }, transaction: t }
+        );
+    
+        await deletedExpense.destroy({transaction:t});
+        await t.commit(); // Delete the expense
         res.json({ message: 'Expense deleted successfully' });
     } catch (error) {
+        await t.rollback();
         console.error(error);
         res.status(500).json({ message: 'Failed to delete expense' });
     }

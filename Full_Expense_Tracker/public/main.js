@@ -304,4 +304,11 @@ window.addEventListener('DOMContentLoaded',async () => {
 
     // Fetch and display expenses on page load
     fetchAndDisplayExpenses();
+    const btnSignOut=document.getElementById('btn_Sign_out');
+ 
+    function handleSignOut() {
+       window.location.href = './login.html'; // Adjust the path as per your file structure
+   }
+   
+   btnSignOut.addEventListener("click", handleSignOut);
 });

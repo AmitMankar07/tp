@@ -20,7 +20,7 @@
 }
 
 form {
-    width: 300px;
+    width: 400px;
     padding: 20px;
     background-color: #fff;
     border-radius: 5px;
@@ -35,7 +35,7 @@ label {
 
 input[type="text"],
 input[type="password"] {
-    width: 100%;
+    width: 95%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -45,7 +45,7 @@ input[type="password"] {
 button[type="submit"] {
     width: 100%;
     padding: 10px;
-    background-color: #4CAF50;
+    background-color: #006bff;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -55,7 +55,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: #45a049;
+    background-color: #006bff;
 }
 h2{
     display: flex;
@@ -69,6 +69,54 @@ h2{
   margin-top: 5px;
   border-radius: 5px;
   display: block;
+}
+#btn_forgot_password {
+    background-color: #9f0707; /* Darkish blood-red */
+    border: none;
+    color: white; /* White font color */
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+#btn_forgot_password:hover {
+    background-color: #5a0000; /* Darker shade of blood-red */
+}
+
+/* Change button background color on click */
+#btn_forgot_password:active {
+    background-color: #800000; /* Restore to blood-red */
+    transform: translateY(2px); /* Add a slight vertical shift when clicked */
+}
+#btn_SignUp {
+    background-color: #006bff; /* Darkish, attractive blue */
+    border: none;
+    color: white; /* White font color */
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+/* Change button background color on hover */
+#btn_SignUp:hover {
+    background-color: #0a3d89; /* Darker shade of blue */
+}
+
+/* Change button background color on click */
+#btn_SignUp:active {
+    background-color: #0047ab; /* Restore to the original blue */
+    transform: translateY(2px); /* Add a slight vertical shift when clicked */
 }
 
     </style>
@@ -89,8 +137,11 @@ h2{
             <input type="password" name="password" id="password" placeholder="Enter password here:" class="form-control" required> 
         </div>
        <button type="submit">Login</button>
+
     </form>
-    <a href="./signup.html">New User-Sign Up</a>
+    <button id="btn_forgot_password" > Forgot Password?</button>
+   <button id="btn_SignUp">New User-SignUp</button>
+    <!-- <a href="./signup.html">New User-Sign Up</a> -->
 </div>
     <script src="./login.js"></script>
 </body>
