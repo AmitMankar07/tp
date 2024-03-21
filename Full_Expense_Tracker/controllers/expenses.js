@@ -2,6 +2,8 @@ const expenses=require('../models/expense');
 const users=require('../models/user');
 const jwt=require('jsonwebtoken');
 const sequelize=require('../util/db');
+const AWS=require('aws-sdk');
+
 const postUserExpenses = async (req, res, next) => {
     const t = await sequelize.transaction();
     try {
@@ -35,42 +37,6 @@ const postUserExpenses = async (req, res, next) => {
       res.status(500).json({ message: "Failed to add expense" });
     }
   };
-// const postUserExpenses=async (req,res,next)=>{
-//     const t=sequelize.transaction();
-//     try{
-        
-//         const { amount, description, category } = req.body;
-//         const token = req.headers.authorization; // Extract token from headers
-//         console.log('Token:', token);
-//         if (!token) {
-//             throw new Error('Token missing');
-//         }
-//         const decodedToken = jwt.verify(token, 'secretkey'); // Verify token
-//         const userId = decodedToken.userId;
-
-//         const expense = await expenses.create({ amount, description, category, userId },{transaction:t}).then(expense=>{
-//             const totalExpense=Number(req.user.totalExpense)+Number(amount)
-//             console.log(totalExpense);
-//         users.update({
-//             totalExpense:totalExpense
-//         },{
-//             where:{id:req.user.id},transaction:t
-//         }).then(async()=>{
-//             t.commit();
-//             res.status(201).json({expense:expense});
-//         }).catch(async(err)=>{
-//             t.rollback();
-//             return res.status(500).json({success:false,error:err});
-
-//         })
-//         });
-
-//     }catch (error) {
-//         t.rollback();
-//         console.error('Error adding expense',error);
-//         res.status(500).json({ message: 'Failed to add expense' });
-//     }
-// };
 
 const getUserExpense = async (req, res, next) => {
     try {
@@ -182,4 +148,61 @@ exports.isPremiumUser = (req, res) => {
 };
 
 
-module.exports={postUserExpenses,getUserExpense,editUserExpenses,deleteUserExpenses,getAllExpenses};
+function uploadToS3(data,filename){
+  const BUCKET_NAME=process.env.BUCKET_NAME;
+  const IAM_USER_KEY=process.env.IAM_USER_KEY;
+  const IAM_SECRET_KEY=process.env.IAM_SECRET_KEY;
+  
+  let s3bucket=new AWS.S3({
+      accessKeyId:IAM_USER_KEY,
+      secretAccessKey:IAM_SECRET_KEY,
+      // Bucket:BUCKET_NAME
+  });
+  
+      var params={
+          Bucket:BUCKET_NAME,
+          Key:filename,
+          Body:data
+      }
+      s3bucket.upload(params,(err,s3response)=>{
+          if(err){
+              console.log("SOmething wrong in s3bucket upload");
+          }
+          else{
+              console.log("suceess upload s3bucket",s3response);
+          }
+      })
+  
+  }
+  
+  const downloadExpenses = async (req, res) => {
+      try {
+          // const expense=await req.user.getUserExpense();
+          // console.log(expense);
+        
+          console.log("in downloadexpense")
+          const userId = req.user.id;
+        const expensesData = await expenses.findAll({
+            where: {
+                userId: userId
+            },
+            include: [{
+                model: users,
+                attributes: ['id', 'name'] // Include the 'id' attribute of the User model
+            }]
+        });
+          // console.log("req.user.getAllExpenses",req.users.getAllExpenses);
+        //   const expensesData = await req.user();
+          const stringifiedExpense = JSON.stringify(expensesData);
+        //   const userId = req.user.id;
+          const filename = `Expense${userId}/${new Date()}.txt`
+          const fileURL = uploadToS3(stringifiedExpense, filename);
+          // await req.user.createFileurl({ url: fileURL });
+          res.status(200).json({ fileURL, success: true })
+      } catch (error) {
+          console.log(error)
+          res.status(500).json({ fileURL: "", success: false, message: error });
+      }
+  };
+  
+module.exports={downloadExpenses,postUserExpenses,getUserExpense,editUserExpenses,deleteUserExpenses,getAllExpenses};

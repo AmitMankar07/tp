@@ -20,7 +20,9 @@ document.getElementById('password').addEventListener('input', () => {
         errorMessage.remove();
     }
 });
-
+document.getElementById("btn_Login").addEventListener("click", function() {
+    window.location.href = "./login.html";
+});
 document.getElementById('signup-form').addEventListener('submit', async (event) => {
     event.preventDefault();
     const name = document.getElementById('name').value;

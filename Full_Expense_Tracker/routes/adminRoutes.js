@@ -1,7 +1,7 @@
 const express=require('express');
 const {postSignUp,postUserLogin}=require('../controllers/users')
 
-const {postUserExpenses, getUserExpense,editUserExpenses,deleteUserExpenses,getAllExpenses}=require('../controllers/expenses');
+const {downloadExpenses,postUserExpenses, getUserExpense,editUserExpenses,deleteUserExpenses,getAllExpenses}=require('../controllers/expenses');
 const userAuthenticate=require('../middleware/auth')
 
 const User=require('../models/user');
@@ -32,6 +32,5 @@ router.get('/premium/premiummembership',authenticate,purchaseController.purchase
 
 router.post('/premium/updateTransactionStatus',authenticate,purchaseController.updateTransactionStatus);
 
-// router.get('/premium/showleaderboard', authenticate, premiumController.showLeaderBoard);
-
+router.get('/download', authenticate, downloadExpenses);
 module.exports=router;

@@ -71,4 +71,5 @@ const postUserLogin=async(req,res,next)=>{
 };
 
 
+
 module.exports={postSignUp,postUserLogin,generateAccessToken};

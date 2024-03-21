@@ -28,10 +28,7 @@ console.log("in auth token",token);
          // Continue to the next middleware
          next();
 
-        
-
-        
-
+    
     } catch (error) {
         console.log("in auth");
         console.log("errror:",error)

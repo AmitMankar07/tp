@@ -6,5 +6,7 @@ const authenticate = require('../middleware/auth');
 
 router.get('/showleaderboard', authenticate, premiumController.showLeaderBoard);
 
+// router.get('/download', authenticate, premiumController.downloadExpenses);
+
 
 module.exports=router;
