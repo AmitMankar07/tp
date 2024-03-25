@@ -10,14 +10,15 @@ const expensesController=require('./expenses');
 
 
 
-// exports.getAllDownloadHistory = async (req, res) => {
-//     try {
-//         const downloadHistory = await UserServices.getAllDownloadHistory(req);
-//         res.status(200).json({ downloadHistory, success: true });
-//     } catch (error) {
-//         res.status(500).json({ message: error, success: false });
-//     }
-// };
+exports.getAllDownloadHistory = async (req, res) => {
+    try {
+        const downloadHistory = await UserServices.getAllDownloadHistory(req);
+        console.log("downlaod historet",downloadHistory);
+        res.status(200).json({ downloadHistory, success: true });
+    } catch (error) {
+        res.status(500).json({ message: error, success: false });
+    }
+};
 
 exports.showLeaderBoard = async (req, res) => {
     try {

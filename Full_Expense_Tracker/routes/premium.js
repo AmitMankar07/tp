@@ -8,5 +8,7 @@ router.get('/showleaderboard', authenticate, premiumController.showLeaderBoard);
 
 // router.get('/download', authenticate, premiumController.downloadExpenses);
 
+router.get('/alldownloadhistory', authenticate, premiumController.getAllDownloadHistory);
+
 
 module.exports=router;

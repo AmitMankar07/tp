@@ -77,6 +77,8 @@
                  <!-- Expenses will be dynamically added here  -->
             </tbody>
         </table>
+        <!-- Pagination will be added here -->
+        <div id="pagination"></div>
     </div>
     <!-- <button onclick="download()" id="downloadexpense">Download File</button> -->
     
@@ -99,18 +101,12 @@
         </table>
     </div>
 
-
-
-    <div class="container" id="download_history_container">
-        <div class="card card-body">
-            <button id="btn_download_history" hidden>
-                Download History
-            </button>
-            <br />
-            <h2 id="download_history_title"></h2>
-            <table id="download_history_list"></table>
-        </div>
+    <div id="downloadHistoryContainer"></div>
+    <h2>Download History</h2>
+    <button id="toggleDownloadHistoryBtn">Toggle Download History</button>
+    <ul id="downloadHistoryList" style="display: none;"></ul>
     </div>
+   
 
 
     <script src="./main.js"></script>

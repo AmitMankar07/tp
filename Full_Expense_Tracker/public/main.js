@@ -127,25 +127,24 @@ if (tbody) {
 const btnDownload=document.getElementById('btn_download');
 btnDownload.onclick=async function(){
     try{
-     const response=    axios.get('http://localhost:3000/users/download', { headers: {"Authorization" : token} });
+     const response=  await  axios.get('http://localhost:3000/users/download', { headers: {"Authorization" : token} });
 
-     
+     console.log(response.status);
          if(response.status === 200){
              //the bcakend is essentially sending a download link
              //  which if we open in browser, the file would download
-             var a = document.createElement("a");
-             a.href = response.data.fileUrl;
-             a.download = 'myexpense.csv';
-             document.body.appendChild(a); 
-             a.click();
-             document.body.removeChild(a); 
-             }else if (response.data && response.data.message) {
-                console.log(response.data.message);
-            }
-         else {
-            console.log('File not available');
-            // throw new Error(response.data.message)
-        }
+             var link = document.createElement("a");
+             link.href = response.data.fileURL;
+             link.download = 'myexpense.csv';
+             document.body.appendChild(link); 
+        
+             link.onload = () => {
+                document.body.removeChild(link); 
+            };
+            link.click();
+            //  document.body.removeChild(link); 
+             }
+            
     }
     catch(err) {
         // showError(err)
@@ -169,7 +168,8 @@ btnDownload.onclick=async function(){
 
             console.log("get succesful");
         console.log(response);
-    
+        console.log("updated token:",response.data.token);   
+        localStorage.setItem('token',response.data.token);
         var options={
             "key":response.data.key_id,
             "order_id":response.data.order.id,
@@ -187,9 +187,8 @@ btnDownload.onclick=async function(){
                  document.getElementById('btn_download').style.display='block';
                 //  ispremium();
                 // document.getElementById('premium').style.visibility='hidden';
-
-                localStorage.setItem('token',res.data.token);
-                console.log("updated token:",res.data.token);   
+        
+                // console.log("updated token:",response.data.token);   
               
             },
         };
@@ -199,7 +198,7 @@ btnDownload.onclick=async function(){
 
         rzp1.on('payment.failed',function (response){
             console.log(response);
-            alert('Something went wrong')
+            alert('Payment Failed!')
         });
         }catch(error){
             console.log("Error:",error);
@@ -243,55 +242,13 @@ async function fetchAndDisplayExpenses() {
             });
             expensesBody.appendChild(row);
         });
+        
     } catch (error) {
         console.error(error);
     }
 }
 
-    // Function to fetch and display expenses
-    // async function fetchAndDisplayExpenses() {
-    //     try {
-    //         const token=localStorage.getItem('token');
-    //         if (!token) {
-    //             // Handle case when token is not present
-    //             console.error('No token found');
-    //             return;
-    //         }
-    //         const expensesResponse = await axios.get('/users/expenses',{
-    //             headers:{'Authorization':`${token}`}});
-    //         const expenses = expensesResponse.data;
-    //         const itemsList = document.getElementById('items');
-    //         itemsList.innerHTML = ''; // Clear existing list items
-    //         expenses.forEach(expense => {
-    //             const listItem = document.createElement('li');
-    //             listItem.textContent = `${expense.amount} - ${expense.description} - ${expense.category}`;
-
-    //             // Add "Edit" button
-    //             const editButton = document.createElement('button');
-    //             editButton.textContent = 'Edit';
-    //             editButton.type = 'button';
-    //             editButton.addEventListener('click', () => {
-    //                 // Handle edit button click
-    //                 editExpense(expense);
-    //             });
-    //             listItem.appendChild(editButton);
-
-    //             // Add "Delete" button
-    //             const deleteButton = document.createElement('button');
-    //             deleteButton.textContent = 'Delete';
-    //             deleteButton.type = 'button'; 
-    //             deleteButton.addEventListener('click', () => {
-    //                 // Handle delete button click
-    //                 deleteExpense(expense.id);
-    //             });
-    //             listItem.appendChild(deleteButton);
-
-    //             itemsList.appendChild(listItem);
-    //         });
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    // }
+    
 
     // Function to handle form submission
     async function handleFormSubmission(event) {
@@ -392,6 +349,56 @@ async function fetchAndDisplayExpenses() {
         console.log("Fields cleared");
     }
     
+// Function to fetch and display download history
+async function displayDownloadHistory() {
+    try {
+        // Fetch download history from the server
+        const response = await axios.get('http://localhost:3000/premium/alldownloadhistory', { headers: { "Authorization": token } });
+        console.log(response);
+        // Get reference to the download history list
+        const downloadHistoryList = document.getElementById('downloadHistoryList');
+
+        // Clear existing list items
+        downloadHistoryList.innerHTML = '';
+        const downloadHistoryArray = response.data.downloadHistory;
+      
+        // Populate list with download history URLs
+ // Loop through the download history array and create list items
+ downloadHistoryArray.forEach(download => {
+    const listItem = document.createElement('li');
+
+  // Create anchor element for the URL
+            const urlLink = document.createElement('a');
+            urlLink.textContent = download.url;
+            urlLink.href = download.url;
+            urlLink.target = "_blank"; // Open link in new tab
+
+            // Append anchor element to list item
+            listItem.appendChild(urlLink);
+
+            // Append list item to download history list
+            downloadHistoryList.appendChild(listItem);
+});
+
+        // Display the download history list
+        downloadHistoryList.style.display = 'block';
+    } catch (error) {
+        console.error(error);
+        // Handle error
+    }
+}
+
+// Function to toggle display of download history list
+document.getElementById('toggleDownloadHistoryBtn').addEventListener('click', function() {
+    const downloadHistoryList = document.getElementById('downloadHistoryList');
+    if (downloadHistoryList.style.display === 'none') {
+        // If list is hidden, display it
+        displayDownloadHistory();
+    } else {
+        // If list is visible, hide it
+        downloadHistoryList.style.display = 'none';
+    }
+});
 
 
     // Add event listener for form submission

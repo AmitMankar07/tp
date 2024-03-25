@@ -14,15 +14,16 @@ const adminRoutes=require('./routes/adminRoutes');
 const premiumRoutes=require('./routes/premium');
 const Order=require('./models/orders');
 const forgotPasswordRoutes=require('./routes/forgotPassword');
+const FileURL=require('./models/fileurl');
 
 const Forgotpassword = require('./models/forgotPassword');
 
 
-
+app.use(cors());
 app.use(express.static('./public'));
 // console.log("in app.js")
 
-app.use(cors());
+
 app.use(express.json());
 app.use('/users',adminRoutes);
 app.use('/premium',premiumRoutes);
@@ -34,6 +35,9 @@ Expense.belongsTo(User);
 User.hasMany(Order);
 Order.belongsTo(User);
 Forgotpassword.belongsTo(User, { foreignKey: 'userId' });
+
+User.hasMany(FileURL);
+FileURL.belongsTo(User);
 
 sequelize.sync().then(
     ()=>{

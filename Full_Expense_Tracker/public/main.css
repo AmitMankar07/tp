@@ -58,7 +58,6 @@ body {
   cursor: pointer;
   border-radius: 4px;
 }
-
 #navbar .navbar-buttons button {
   background-color: #653fe3;
   border: none;
@@ -81,6 +80,30 @@ body {
   /* box-shadow: 0 5px #666; */
   /* transform: translateY(4px); */
 }
+
+#btn_leader_board, #btn_download {
+  background-color: #000000;
+  color: white;
+  font-family: 'Algerian';
+  padding: 10px 20px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-weight: bold;
+  border: none;
+  position: relative;
+  overflow: hidden;
+}
+
+#btn_leader_board:hover, #btn_download:hover {
+  background-color: #000000;
+  color: white;
+}
+#navbar .navbar-buttons button:active {
+  background-color: #000000;
+  /* box-shadow: 0 5px #666; */
+  /* transform: translateY(4px); */
+}
+
 #expense-form-container {
   display: flex;
   flex-direction: column;
@@ -291,4 +314,51 @@ display: block;
 #leader_board_table td {
   padding: 15px;
   font-size: 14px;
+}
+#downloadHistoryContainer {
+  display: flex;
+  flex-direction: column;
+  background-color: #f2f2f2;
+  width: 85%;
+  margin: 10px auto;
+  /* padding: 20px; */
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  max-height: 500px;
+}
+
+#downloadHistoryContainer h2 {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+#downloadHistoryList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#downloadHistoryList li {
+  margin-bottom: 10px;
+  width: 100%;
+  max-width: 600px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#toggleDownloadHistoryBtn {
+  margin-bottom: 10px;
+  width: 50%;
+  padding: 10px;
+  background: linear-gradient(135deg, #0056b3, #003d7f);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
 }

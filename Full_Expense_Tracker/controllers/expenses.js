@@ -2,7 +2,13 @@ const expenses=require('../models/expense');
 const users=require('../models/user');
 const jwt=require('jsonwebtoken');
 const sequelize=require('../util/db');
-const AWS=require('aws-sdk');
+
+const { resolve } = require('bluebird');
+const { reject } = require('bluebird');
+const S3service=require('../services/S3services');
+const userServices=require('../services/userservices');
+const FILEURL=require('../models/fileurl');
+const FileURL = require('../models/fileurl');
 
 const postUserExpenses = async (req, res, next) => {
     const t = await sequelize.transaction();
@@ -148,32 +154,7 @@ exports.isPremiumUser = (req, res) => {
 };
 
 
-function uploadToS3(data,filename){
-  const BUCKET_NAME=process.env.BUCKET_NAME;
-  const IAM_USER_KEY=process.env.IAM_USER_KEY;
-  const IAM_SECRET_KEY=process.env.IAM_SECRET_KEY;
-  
-  let s3bucket=new AWS.S3({
-      accessKeyId:IAM_USER_KEY,
-      secretAccessKey:IAM_SECRET_KEY,
-      // Bucket:BUCKET_NAME
-  });
-  
-      var params={
-          Bucket:BUCKET_NAME,
-          Key:filename,
-          Body:data
-      }
-      s3bucket.upload(params,(err,s3response)=>{
-          if(err){
-              console.log("SOmething wrong in s3bucket upload");
-          }
-          else{
-              console.log("suceess upload s3bucket",s3response);
-          }
-      })
-  
-  }
+
   
   const downloadExpenses = async (req, res) => {
       try {
@@ -182,26 +163,17 @@ function uploadToS3(data,filename){
         
           console.log("in downloadexpense")
           const userId = req.user.id;
-        const expensesData = await expenses.findAll({
-            where: {
-                userId: userId
-            },
-            include: [{
-                model: users,
-                attributes: ['id', 'name'] // Include the 'id' attribute of the User model
-            }]
-        });
-          // console.log("req.user.getAllExpenses",req.users.getAllExpenses);
-        //   const expensesData = await req.user();
+        const expensesData = await userServices.getExpenses(req);
+            
           const stringifiedExpense = JSON.stringify(expensesData);
-        //   const userId = req.user.id;
           const filename = `Expense${userId}/${new Date()}.txt`
-          const fileURL = uploadToS3(stringifiedExpense, filename);
-          // await req.user.createFileurl({ url: fileURL });
+          const fileURL =await S3service.uploadToS3(stringifiedExpense, filename);
+          console.log(fileURL);
+        FileURL.create({url:fileURL,userId:userId});
           res.status(200).json({ fileURL, success: true })
       } catch (error) {
           console.log(error)
-          res.status(500).json({ fileURL: "", success: false, message: error });
+          res.status(500).json ({ fileURL: "", success: false, message: error });
       }
   };
   
