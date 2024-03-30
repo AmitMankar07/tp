@@ -101,12 +101,19 @@
         </table>
     </div>
 
-    <div id="downloadHistoryContainer"></div>
-    <h2>Download History</h2>
-    <button id="toggleDownloadHistoryBtn">Toggle Download History</button>
-    <ul id="downloadHistoryList" style="display: none;"></ul>
+    <div id="premium_content_container" style="display: none;">
+        <div id="limit_rows_container">
+            <label for="limit">No Of rows</label>
+            <input type="number" id="rows_limit">
+            <button id="limit">submit</button>
+        </div>
+        <div id="downloadHistoryContainer">
+            <label for="">Download History</label>
+            <button id="toggleDownloadHistoryBtn">Toggle Download History</button>
+            <ul id="downloadHistoryList" style="display: none;"></ul>
+        </div>
+       
     </div>
-   
 
 
     <script src="./main.js"></script>

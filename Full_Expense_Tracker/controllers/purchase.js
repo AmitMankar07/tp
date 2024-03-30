@@ -23,31 +23,8 @@ const purchasepremium = async (req, res) => {
     
       console.log("values if configured");
       
-      const amount = 2500;
+      const amount = 4000;
   
-    //    rzp.orders.create({
-    //     amount,
-    //     currency: "INR",
-    //   },{
-    //     headers: {
-    //       'Authorization': token
-    //   },
-    //   });
-      
-    //   console.log("order:",order);
-  
-    // // Save the order details in the database
-    // await Order.create({
-    //     orderid: order.id,
-    //     amount: order.amount,
-    //     currency: order.currency,
-    //     status: "PENDING",
-    //     userId:req.user.id,
-    //   });
-  
-    // //   const result = await rzp.orders.createOrder({ orderid: order.id, status: "PENDING" });
-  
-    
   
     //   return res.status(201).json({ order, key_id: rzp.key_id });
     rzp.orders.create({ // Ensure correct function call
@@ -69,10 +46,23 @@ const purchasepremium = async (req, res) => {
               userId: req.user.id,
           });
             // Generate a new token reflecting the user's premium status
-            const updatedUser = await User.findOne({ where: { id: req.user.id } });
-            const newToken = userController.generateAccessToken(updatedUser.id, updatedUser.name, updatedUser.ispremiumuser);
-
-
+            // const updatedUser = await User.findOne({ where: { id: req.user.id } });
+            // const newToken = await userController.generateAccessToken(updatedUser.id, updatedUser.name, updatedUser.ispremiumuser);
+            // Update the user's ispremiumuser field
+    const updatedUser = await User.update(
+      { ispremiumuser: true },
+      { where: { id: req.user.id } }
+    );
+            const newToken = jwt.sign(
+              {
+                userId: req.user.id,
+                name: req.user.name,
+                ispremiumuser: true,
+                iat: Math.floor(Date.now() / 1000),
+              },
+              process.env.TOKEN_SECRET
+            );
+console.log("newtoken in purchasepremium:",newToken)
           return res.status(201).json({ order, key_id: rzp.key_id , token: newToken});
       } catch (err) {
           console.log(err);
@@ -98,7 +88,7 @@ const purchasepremium = async (req, res) => {
 
       const [order, user] = await Promise.all([
         Order.findOne({ where: { orderid: order_id } }),
-        req.user
+        req.user,User.findByPk(userid),
       ]);
   
       console.log("order:", order);
@@ -116,11 +106,19 @@ const purchasepremium = async (req, res) => {
   // Send the isPremiumUser property as part of the response
   // const updatedUser = await user.findOne({ where: { id: user.id } });
   // ,token:userController.generateAccessToken(userid,undefined,true) 
-  const updatedUser = await User.findOne({ where: { id: user.id } });
-  const newToken = userController.generateAccessToken(updatedUser.id, updatedUser.name, updatedUser.ispremiumuser);
+  const updatedToken=jwt.sign({
+    userId: user.id,
+            name: user.name,
+            ispremiumuser: user.ispremiumuser,
+            iat: Math.floor(Date.now() / 1000),
+  },process.env.TOKEN_SECRET);
+  req.user.token=updatedToken;
+  // const updatedUser = await User.findOne({ where: { id: user.id } });
+  // const newToken = userController.generateAccessToken(updatedUser.id, updatedUser.name, updatedUser.ispremiumuser);
   // const newToken = userController.generateAccessToken(user.id, user.name, user.ispremiumuser);
-
-      return res.status(200).json({ success: true, message: "Transaction Successfull!",token:newToken });
+  // localStorage.setItem('token', updatedToken);
+  console.log("newtoken in update transaction",updatedToken);
+      return res.status(200).json({ success: true, message: "Transaction Successfull!",token:updatedToken});
       console.log("Transaction updated successfully");
     } catch (err) {
       console.error("Error in updateTransactionStatus:", err);

@@ -315,15 +315,20 @@ display: block;
   padding: 15px;
   font-size: 14px;
 }
+#premium_content_container {
+  display: flex;
+  /* justify-content: space-between; Aligns the two containers at the ends of the flex container */
+}
 #downloadHistoryContainer {
+  
   display: flex;
   flex-direction: column;
-  background-color: #f2f2f2;
+ 
   width: 85%;
   margin: 10px auto;
   /* padding: 20px; */
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
   overflow-y: auto;
   max-height: 500px;
 }
@@ -353,7 +358,7 @@ display: block;
 
 #toggleDownloadHistoryBtn {
   margin-bottom: 10px;
-  width: 50%;
+  /* width: 50%; */
   padding: 10px;
   background: linear-gradient(135deg, #0056b3, #003d7f);
   color: #fff;
@@ -361,4 +366,35 @@ display: block;
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
+}
+#limit{
+  margin-bottom: 10px;
+  /* width: 50%; */
+  padding: 10px;
+  background: linear-gradient(135deg, #0056b3, #003d7f);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+#pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* Adjust margin as needed */
+}
+
+#pagination button {
+  margin: 0 5px; /* Adjust margin as needed */
+  padding: 3px 8px; /* Adjust padding as needed */
+  border: none; /* Remove border */
+  background-color: transparent; /* Make background transparent */
+  cursor: pointer;
+  font-size: 14px; /* Adjust font size as needed */
+  text-decoration: underline; /* Add underline */
+}
+
+#pagination button:hover {
+  text-decoration: none; /* Remove underline on hover */
+  border-bottom: 1px solid #000; /* Add underline on hover */
 }

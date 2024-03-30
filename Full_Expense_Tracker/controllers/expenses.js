@@ -59,17 +59,43 @@ const getUserExpense = async (req, res, next) => {
   };
 const getAllExpenses=async (req,res,next)=>{
     try{
+    
         const userId=req.user.id;
-        const allExpenses=await expenses.findAll({
-            where:{
-                userId:userId
-            },
-            include: [{
-                model: users,
-                attributes: ['id','name'] // Include the 'id' attribute of the User model
-            }]
-        });
-        res.status(200).json(allExpenses);
+        const { page = 1, limit = 10 } = req.query;
+        const offset = (page - 1) * limit;
+      console.log("in getallexpense controlooer")
+        const { count, rows:userExpenses } = await expenses.findAndCountAll({
+          where: { userId },
+          
+          limit: parseInt(limit),
+          offset: parseInt(offset),
+          include: [{
+            model: users,
+            attributes: ['id', 'name'] // Include the 'id' attribute of the User model
+          }]
+      });
+
+      const totalPages = Math.ceil(count / limit);
+
+      res.status(200).json({
+          userExpenses,
+          currentPage: parseInt(page),
+          hasNextPage: parseInt(page) < totalPages,
+          hasPreviousPage: parseInt(page) > 1,
+          nextPage: parseInt(page) < totalPages ? parseInt(page) + 1 : null,
+          previousPage: parseInt(page) > 1 ? parseInt(page) - 1 : null,
+          lastPage: totalPages
+      });
+        // const allExpenses=await expenses.findAll({
+        //     where:{
+        //         userId:userId
+        //     },
+        //     include: [{
+        //         model: users,
+        //         attributes: ['id','name'] // Include the 'id' attribute of the User model
+        //     }]
+        // });
+        // res.status(200).json(allExpenses);
     }catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Failed to get expense' });

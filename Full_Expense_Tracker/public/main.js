@@ -18,23 +18,30 @@ function parseJwt (token) {
 
 window.addEventListener('DOMContentLoaded',async () => {
     const token=localStorage.getItem('token');
-    
-    const decodeToken=parseJwt(token);
-    console.log("decodetoken in main.js:",decodeToken);
-    const isPremiumUser=decodeToken.ispremiumuser;
-    console.log(isPremiumUser);
-    
-    if (decodeToken.ispremiumuser) {
-        document.getElementById('premium').style.display = 'none';
-        // document.getElementById('premiumuser').style.display = 'block';
-        document.getElementById('premiummessage').style.display='block';
-        document.getElementById('btn_leader_board').style.display='block';
-        document.getElementById('btn_download').style.display='block';
+    checkPremiumUser();
+    function checkPremiumUser(){
+        const token=localStorage.getItem('token');
+        const decodeToken=parseJwt(token);
+        console.log("decodetoken in main.js:",decodeToken);
+        const isPremiumUser=decodeToken.ispremiumuser;
+        console.log(isPremiumUser);
         
-    } else {
-        document.getElementById('premium').style.display = 'block';
-        document.getElementById('premiummessage').style.display = 'none';
+        if (decodeToken.ispremiumuser) {
+            document.getElementById('premium').style.display = 'none';
+            document.getElementById('premiummessage').style.display='block';
+            document.getElementById('btn_leader_board').style.display='block';
+            document.getElementById('btn_download').style.display='block';
+            document.getElementById('premium_content_container').style.display = 'block';
+    
+            
+        } else {
+            document.getElementById('premium_content_container').style.display = 'none';
+    
+            document.getElementById('premium').style.display = 'block';
+            document.getElementById('premiummessage').style.display = 'none';
+        }
     }
+    
     // Function to check if user is a premium member
     
       // Call checkPremiumUser after user logs in or reloads the page
@@ -50,7 +57,7 @@ const leaderBoardTable = document.getElementById("leader_board_table");
     document.getElementById('home_btn').onclick=function(){
 
 window.location.href='./main.html';
-
+checkPremiumUser();
     document.getElementById('expense-form-container').style.display='block';
         document.getElementById('expenses-container').style.display='block';
         document.getElementById('leaderboard-container').style.display = 'none';
@@ -181,10 +188,11 @@ btnDownload.onclick=async function(){
 
                  alert('You are Premium User Now');
                  document.getElementById('premium').style.display = 'none';
-
                  document.getElementById('premiummessage').style.display='block';
                  document.getElementById('btn_leader_board').style.display='block';
                  document.getElementById('btn_download').style.display='block';
+                 document.getElementById('premium_content_container').style.display = 'block';
+
                 //  ispremium();
                 // document.getElementById('premium').style.visibility='hidden';
         
@@ -206,8 +214,10 @@ btnDownload.onclick=async function(){
         }
         
     };
+
+    let globalLimit=5;
 // Function to fetch and display expenses
-async function fetchAndDisplayExpenses() {
+async function fetchAndDisplayExpenses(page = 1) {
     try {
         const token = localStorage.getItem('token');
         if (!token) {
@@ -215,13 +225,16 @@ async function fetchAndDisplayExpenses() {
             console.error('No token found');
             return;
         }
-        const expensesResponse = await axios.get('/users/expenses', {
+        const expensesResponse = await axios.get(`/users/expenses?page=${page}&limit=${globalLimit}`, {
             headers: { 'Authorization': `${token}` }
         });
-        const expenses = expensesResponse.data;
+        console.log("expensesResponse.data",expensesResponse.data);
+        
+        const { userExpenses, currentPage, hasNextPage, hasPreviousPage, nextPage, previousPage, lastPage } = expensesResponse.data;
+        console.log(userExpenses);
         const expensesBody = document.getElementById('expenses-body');
         expensesBody.innerHTML = ''; // Clear existing table body
-        expenses.forEach(expense => {
+        userExpenses.forEach(expense => {
             const row = document.createElement('tr');
             row.innerHTML = `
             <td>${expense.category}</td>
@@ -242,7 +255,14 @@ async function fetchAndDisplayExpenses() {
             });
             expensesBody.appendChild(row);
         });
-        
+        showpagination({
+            currentPage,
+            hasNextPage,
+            hasPreviousPage,
+            nextPage,
+            previousPage,
+            lastPage
+        });
     } catch (error) {
         console.error(error);
     }
@@ -318,28 +338,43 @@ async function fetchAndDisplayExpenses() {
         if (hasPreviousPage) {
             const btn2 = document.createElement("button");
             btn2.innerHTML = previousPage;
-            btn2.addEventListener("click", () => showExpenses(previousPage));
+            btn2.addEventListener("click", () => fetchAndDisplayExpenses(previousPage));
             pagination.appendChild(btn2);
         }
         const btn1 = document.createElement("button");
         btn1.innerHTML = `<h3>${currentPage}</h3>`;
-        btn1.addEventListener("click", () => showExpenses(currentPage));
+        btn1.addEventListener("click", () => fetchAndDisplayExpenses(currentPage));
         pagination.appendChild(btn1);
     
         if (hasNextPage) {
             const btn3 = document.createElement("button");
             btn3.innerHTML = nextPage;
-            btn3.addEventListener("click", () => showExpenses(nextPage));
+            btn3.addEventListener("click", () => fetchAndDisplayExpenses(nextPage));
             pagination.appendChild(btn3);
         }
         if (lastPage > 2 && lastPage > nextPage) {
             const btn4 = document.createElement("button");
             btn4.innerHTML = lastPage;
-            btn4.addEventListener("click", () => showExpenses(lastPage));
+            btn4.addEventListener("click", () => fetchAndDisplayExpenses(lastPage));
             pagination.appendChild(btn4);
         }
     }
     
+// Get reference to the limit input and submit button
+const limitInput = document.getElementById('rows_limit');
+const limitSubmitButton = document.getElementById('limit');
+console.log(limitInput);
+limitSubmitButton.addEventListener('click', () => {
+     const newLimit = parseInt(limitInput.value);
+
+    if (!isNaN(newLimit) && newLimit > 0) {
+       globalLimit=newLimit;
+       limitInput.value='';
+       fetchAndDisplayExpenses(1);
+    } else {
+         console.error('Invalid input for number of rows.');
+    }
+});
 
     // Function to clear input fields
     function clearFields() {
@@ -364,6 +399,12 @@ async function displayDownloadHistory() {
       
         // Populate list with download history URLs
  // Loop through the download history array and create list items
+ if (downloadHistoryArray.length === 0) {
+    // If download history array is empty, display a message
+    const listItem = document.createElement('li');
+    listItem.textContent = 'No download history found';
+    downloadHistoryList.appendChild(listItem);
+} else{
  downloadHistoryArray.forEach(download => {
     const listItem = document.createElement('li');
 
@@ -379,6 +420,7 @@ async function displayDownloadHistory() {
             // Append list item to download history list
             downloadHistoryList.appendChild(listItem);
 });
+}
 
         // Display the download history list
         downloadHistoryList.style.display = 'block';
