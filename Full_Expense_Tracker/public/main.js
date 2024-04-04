@@ -70,6 +70,9 @@ btnLeaderBoard.onclick = async () => {
         document.getElementById('expense-form-container').style.display='none';
         document.getElementById('expenses-container').style.display='none';
         document.getElementById('leaderboard-container').style.display = 'block';
+        document.getElementById('premium_content_container').style.display = 'none';
+        document.getElementById('downloadHistoryContainer').style.display = 'none';
+    
         console.log("style updated")
         leaderBoardTitle.textContent = "Leader Board:";
         console.log("token in leaderboard", token);
@@ -236,7 +239,15 @@ async function fetchAndDisplayExpenses(page = 1) {
         expensesBody.innerHTML = ''; // Clear existing table body
         userExpenses.forEach(expense => {
             const row = document.createElement('tr');
+            // Extracting date from createdAt property
+        const expenseDate = new Date(expense.createdAt).toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric'
+    }); // Modify as per your date format needs
+    
             row.innerHTML = `
+            <td>${expenseDate}</td>
             <td>${expense.category}</td>
                 
                 <td>${expense.description}</td>

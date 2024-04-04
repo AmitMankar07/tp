@@ -1,8 +1,5 @@
 
-//
-// });
 
-// });
 document.addEventListener('DOMContentLoaded', () => {
   function clearFields() {
     document.getElementById('name').value = '';
@@ -79,14 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
    }catch(error){
     console.log("error:",error);
-        // Display an error message to the user
-        // if (error.response.status === 400) {
-        //     alert(error.response.data.message);
-        //   } else if (error.response.status === 404) {
-        //     alert(error.response.data.message);
-        //   } else if (error.response.status === 401) {
-        //     alert(error.response.data.message);
-        //   }
+    
    }
 
   });

@@ -8,11 +8,6 @@ const cors=require('cors');
 const fs=require('fs');
 const session = require('express-session');
 
-app.use(session({
-  secret: 'secretkey',
-  resave: false,
-  saveUninitialized: false,
-}));
 
 const sequelize=require('./util/db');
 const User=require('./models/user');

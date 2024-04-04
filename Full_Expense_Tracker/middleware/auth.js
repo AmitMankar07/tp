@@ -9,23 +9,7 @@ const authenticate=async(req,res,next)=>{
 
         // // Check if token is already set in localStorage
         // const user = req.session.user;
-        // if (user) {
-        //     console.log("User from session:", user);
-        //     req.user = user;
-        //     return next();
-        // }
-
-        // // If user is not in session, proceed with token from request header
-        // const tokenFromHeader = req.header("Authorization");
-        // console.log("Token from header:", tokenFromHeader);
-        // const decodedUser = jwt.verify(tokenFromHeader, process.env.TOKEN_SECRET);
-        // console.log("Decoded user:", decodedUser);
-        // const foundUser = await User.findByPk(decodedUser.userId);
-        // req.user = foundUser;
-
-        // // Store user in session for subsequent requests
-        // req.session.user = foundUser;
-        // next();
+        
         const token = req.header('Authorization');
 console.log("in auth token",token);
     // Check if token is missing
