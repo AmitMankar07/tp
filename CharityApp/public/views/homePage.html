@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Main Page</title>
+	<style>
+        body {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: auto auto;
+            gap: 20px;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+
+        .main-content, nav {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        nav a {
+            display: block;
+            background-color: #007BFF;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+		<h1>Welcome to Charity App</h1>
+		<p>This is the main page of the Charity App. From here, you can access various features of the app.</p>
+	</div>
+	<nav>
+        <a href="userProfile.html">User Profile</a>
+		<a href="admindashboard.html">Admin Dashboard</a>
+		<a href="charityregister.html">Charity Register</a>
+		<a href="donate.html">Donate</a>
+		<a href="donationhistory.html">Donation History</a>
+	</nav>
+	
+</body>
+</html>

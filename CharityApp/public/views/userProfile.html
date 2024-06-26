@@ -1,0 +1,35 @@
+<!-- profile.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>User Profile</h1>
+    <div id="profile-info">
+        <p id="profile-name"></p>
+        <p id="profile-email"></p>
+    </div>
+    
+    <button id="update-profile-btn">Update Profile</button>
+    <hr>
+    <h2>Donation History</h2>
+    <button id="get-donation-history-btn">Get Donation History</button>
+    <ul id="donation-history-list"></ul>
+    <p id="error-message"></p>
+    
+    <form id="update-profile-form" style="display: none;">
+        <label for="name">New Name:</label>
+        <input type="text" id="name" name="name"><br><br>
+        <label for="email">New Email:</label>
+        <input type="email" id="email" name="email"><br><br>
+        <button type="submit">Update Profile</button>
+    </form>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.3/axios.min.js"></script>
+   
+    <script src="../js/userProfile.js"></script>
+</body>
+</html>

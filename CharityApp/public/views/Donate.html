@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donation Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+   
+</head>
+<body>
+    <h1>Donation Platform</h1>
+    <form id="search-form">
+        <input type="text" id="search-input" placeholder="Search for charities">
+        <button id="search-btn">Search</button>
+    </form>
+    <div id="charity-list">
+        <!-- charity list will be rendered here -->
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.3/axios.min.js"></script>
+   
+    <script src="../js/donate.js"></script>
+</body>
+</html>
