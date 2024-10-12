@@ -97,7 +97,17 @@ body {
     border-radius: 8px;
     transition: background-color 0.3s ease;
   }
-  
+  .form {
+    display: none;
+}
+
+.form.active {
+    display: block;
+}
+
+.form.inactive {
+    display: none;
+}
   /* Change button background color on hover */
   #btn_SignUp:hover {
     background-color: #0a3d89; /* Darker shade of blue */

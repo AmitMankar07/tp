@@ -17,6 +17,18 @@ const Donation = sequelize.define('donations', {
     },
     paymentStatus: {
       type: Sequelize.STRING
+    }, 
+    orderId: {
+      type: Sequelize.STRING
+    },
+    paymentId: {
+      type: Sequelize.STRING
+    },
+    signature: {
+      type: Sequelize.STRING
+    },
+    status: {
+      type: Sequelize.STRING
     },
     // userId: {
     //   type: Sequelize.INTEGER,

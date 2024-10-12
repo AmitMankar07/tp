@@ -1,6 +1,22 @@
 document.addEventListener('DOMContentLoaded',()=>{
     const btnForgotPassword=document.getElementById('btn_forgot_password');
-  
+   
+ 
+    document.getElementById('role').addEventListener('change', function() {
+      var donorForm = document.getElementById('login-form');
+      var charityForm = document.getElementById('charity-login-form');
+      if (this.value === 'donor') {
+          donorForm.classList.add('active');
+          donorForm.classList.remove('inactive');
+          charityForm.classList.add('inactive');
+          charityForm.classList.remove('active');
+      } else {
+          charityForm.classList.add('active');
+          charityForm.classList.remove('inactive');
+          donorForm.classList.add('inactive');
+          donorForm.classList.remove('active');
+      }
+  });
   function handleForgotClick() {
     window.location.href = '../views/forgotPassword.html'; // Adjust the path as per your file structure
   }
@@ -83,6 +99,34 @@ document.addEventListener('DOMContentLoaded',()=>{
             } 
                  }
            })
+
+           const charityLoginForm = document.getElementById('charity-login-form');
+
+charityLoginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const charityEmail = document.getElementById('charity-email').value;
+    const charityPassword = document.getElementById('charity-password').value;
+
+    try {
+        const response = await axios.post('/charity/login', {
+            charityEmail,
+            charityPassword
+        });
+        conslo
+        const data = await response.data;
+
+        if (data.success) {
+            alert('Login successful!');
+            window.location.href='/views/CharityProfile.html'; // Redirect to charity dashboard or profile page
+        } else {
+            alert('Invalid email or password');
+        }
+    } catch (error) {
+        console.error(error);
+        alert('Error logging in');
+    }
+});
         
   });
   

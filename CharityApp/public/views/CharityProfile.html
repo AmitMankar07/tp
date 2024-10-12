@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charity Profile</title>
+    <link rel="stylesheet" href="../css/charityProfile.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Charity Profile</h1>
+        <div class="charity-info">
+            <h2>Charity Name: {{ charity.name }}</h2>
+            <p>Charity Email: {{ charity.email }}</p>
+            <p>Charity Description: {{ charity.description }}</p>
+        </div>
+        <div class="charity-mission">
+            <h2>Mission:</h2>
+            <p>{{ charity.mission }}</p>
+        </div>
+        <div class="charity-goals">
+            <h2>Goals:</h2>
+            <p>{{ charity.goals }}</p>
+        </div>
+        <div class="charity-projects">
+            <h2>Projects:</h2>
+            <ul>
+                {% for project in charity.projects %}
+                    <li>
+                        <h3>{{ project.name }}</h3>
+                        <p>{{ project.description }}</p>
+                        <p>Goal: {{ project.goal }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <button id="edit-profile">Edit Profile</button>
+        <button id="add-project">Add Project</button>
+    </div>
+    <script src="../js/charity-profile.js"></script>
+</body>
+</html>

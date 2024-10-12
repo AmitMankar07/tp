@@ -17,6 +17,7 @@ console.log("userid:",userId);
 getDonationHistoryBtn.addEventListener('click', async () => {
     try {
       const response = await axios.get('/donation-history',{ headers: { Authorization: token }} );
+      console.log(response);
       const donations = response.data;
       donationHistoryList.innerHTML = '';
       donations.forEach((donation) => {

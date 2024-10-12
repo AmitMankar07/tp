@@ -10,5 +10,6 @@ const charityAuthentication = require("../middleware/auth");
 
 router.post("/charity/register", charityController.postCharityRegister);
 router.post("/charity/approve", charityController.postCharityApprove);
+router.post('/charity/login', charityController.postCharityLogin);
 
 module.exports = router;

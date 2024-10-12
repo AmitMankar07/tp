@@ -18,6 +18,7 @@ charityRegisterForm.addEventListener('submit', async (e) => {
 
     const data = await response.data;
 
+
     if (data.success) {
       alert('Charity registered successfully!');
       charityRegisterForm.reset();
@@ -28,4 +29,5 @@ charityRegisterForm.addEventListener('submit', async (e) => {
     console.error(error);
     alert('Error registering charity: ' ,error.message);
   }
-});
+`
+`});

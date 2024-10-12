@@ -27,7 +27,11 @@ const User=sequelize.define('users',{
   unique:true,
   defaultValue: null
  }
-  ,
+  , role: {
+    type: Sequelize.ENUM,
+    values: ['user', 'admin'],
+    defaultValue: 'user'
+  },
   Totaldonation:{
 type:Sequelize.INTEGER,
 defaultValue:0

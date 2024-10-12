@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,7 +12,6 @@
 <body>
     <div>
 
-   
     <form id="signup-form" action="/user/signUp" method="post">
         <h2>SignUp</h2>
         <div>
@@ -34,10 +33,81 @@
         </div>
        <button type="submit">Sign Up</button>
       </form>
-    <!-- <a href="./login.html">Existing User-Login</a> -->
+    <a href="./login.html">Existing User-Login</a>
     <button id="btn_Login">Existing User-Login</button>
    
 </div>
     <script src="../js/signup.js"></script>
 </body>
-</html>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sign Up</title>
+        <link rel="stylesheet" href="../css/signup.css">
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  
+    </head>
+    <body>
+        <div class="container">
+            <h1>Sign Up</h1>
+            <div class="role-selector">
+                <label for="role">Select your role:</label>
+                <select id="role" name="role">
+                    <option value="donor">For Donors</option>
+                    <option value="charity">For Charities</option>
+                </select>
+            </div>
+            <div class="forms" >
+                <form id="signup-form" class="form active">
+                    <h2>Donor Information</h2>
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="mobilenum">Mobile No:</label>
+                        <input type="number" id="mobilenum" name="mobilenum" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <button type="submit">Sign Up</button>
+                </form>
+                <form id="charity-form" class="form inactive">
+                    <h2>Charity Information</h2>
+                    <div class="form-group">
+                        <label for="charity-name">Charity Name:</label>
+                        <input type="text" id="charity-name" name="charity-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="charity-email">Charity Email:</label>
+                        <input type="email" id="charity-email" name="charity-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="charity-mobilenum">Charity Mobile No:</label>
+                        <input type="number" id="charity-mobilenum" name="charity-mobilenum" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="charity-password">Charity Password:</label>
+                        <input type="password" id="charity-password" name="charity-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="charity-description">Charity Description:</label>
+                        <textarea id="charity-description" name="charity-description" required></textarea>
+                    </div>
+                    <button type="submit">Register Charity</button>
+                </form>
+            </div>
+            <button id="btn_Login">Existing User-Login</button>
+        </div>
+        <script src="../js/signup.js"></script>
+    </body>
+    </html>

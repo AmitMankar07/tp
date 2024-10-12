@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -31,8 +31,63 @@
     </form>
     <button id="btn_forgot_password" > Forgot Password?</button>
    <button id="btn_SignUp">New User-SignUp</button>
-    <!-- <a href="./signup.html">New User-Sign Up</a> -->
-</div>
+     <a href="./signup.html">New User-Sign Up</a>
+<!-- </div> -->
+    <!-- <script src="../js/login.js"></script> -->
+<!-- </body> -->
+<!-- </html> --> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    
+    <link rel="stylesheet" href="../css/login.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+   
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Login</h1>
+        <div class="role-selector">
+            <label for="role">Select your role:</label>
+            <select id="role" name="role">
+                <option value="donor">For Donors</option>
+                <option value="charity">For Charities</option>
+            </select>
+        </div>
+        <div class="forms">
+            <form id="login-form" class="form active">
+                <h2>Donor Login</h2>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+            <form id="charity-login-form" class="form inactive">
+                <h2>Charity Login</h2>
+                <div class="form-group">
+                    <label for="charity-email">Charity Email:</label>
+                    <input type="email" id="charity-email" name="charity-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="charity-password">Charity Password:</label>
+                    <input type="password" id="charity-password" name="charity-password" required>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+        <button id="btn_forgot_password">Forgot Password?</button>
+        <button id="btn_SignUp">New User-SignUp</button>
+    </div>
     <script src="../js/login.js"></script>
 </body>
 </html>

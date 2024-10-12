@@ -1,0 +1,111 @@
+body {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  h1, h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  #profile-info {
+    margin-bottom: 20px;
+  }
+  .back-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    text-decoration: none;
+    color: #333;
+    background-color: #f0f0f0;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .back-button:hover {
+    background-color: #ccc;
+  }
+  #profile-name, #profile-email {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  #update-profile-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  #update-profile-btn:hover {
+    background-color: #45a049;
+  }
+  
+  #get-donation-history-btn {
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  #get-donation-history-btn:hover {
+    background-color: #1976D2;
+  }
+  
+  #donation-history-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+  }
+  
+  #donation-history-list li {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  #donation-history-list li:last-child {
+    border-bottom: none;
+  }
+  
+  #error-message {
+    color: red;
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  
+  #update-profile-form {
+    display: none;
+  }
+  
+  #update-profile-form label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  #update-profile-form input[type="text"], #update-profile-form input[type="email"] {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  #update-profile-form button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  #update-profile-form button[type="submit"]:hover {
+    background-color: #45a049;
+  }

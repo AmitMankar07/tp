@@ -18,13 +18,21 @@ const postSignUp = async (req, res, next) => {
       res.status(400).json({ message: 'Email id already exists' });
       return;
     }
+    const userCount = await User.count();
+    let role = 'user';
+    if (userCount === 0) {
+      role = 'admin';
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
 
-    const user = await User.create({ name, email, password: hashedPassword, mobileno });
+    const user = await User.create({ name, email, password: hashedPassword, mobileno ,role});
     console.log("User created:", user);
-    res.status(201).json(user);
+    // res.status(201).json(user);
 
+    const accessToken = generateAccessToken(user.id, user.name, user.role === 'admin');
+    res.status(201).json({ user, accessToken });
 
   } catch (error) {
     console.error(error);
@@ -32,9 +40,10 @@ const postSignUp = async (req, res, next) => {
 
   }
 };
-const generateAccessToken = (id, name, ispremiumuser) => {
-  return jwt.sign({ userId: id, name: name, ispremiumuser }, 'secretkey');
+const generateAccessToken = (id, name, ispremiumuser,role) => {
+  return jwt.sign({ userId: id, name: name, ispremiumuser ,role}, 'secretkey');
 }
+
 const postUserLogin = async (req, res, next) => {
   try {
     console.log("inside login:", req.body)
@@ -60,7 +69,7 @@ const postUserLogin = async (req, res, next) => {
     // const token=jwt.sign({userId:user.id,name:user.name,ispremiumuser:user.ispremiumuser},'secretkey');
     // console.log("token login:",token);
 
-    const token = generateAccessToken(user.id, user.name, user.ispremiumuser);
+    const token = generateAccessToken(user.id, user.name, user.ispremiumuser,user.role);
 
     res.status(200).json(token);
   } catch (error) {
@@ -69,6 +78,24 @@ const postUserLogin = async (req, res, next) => {
   }
 };
 
+const getAllUsers = async (req, res, next) => {
+  try {
+    const users = await User.findAll();
+    const totalCount = users.length;
+    res.status(200).json({
+      message: 'All users fetched successfully',
+      users: users,
+      totalCount: totalCount
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: 'Error fetching users',
+      error: error
+    });
+  }
+};
 
 
-module.exports = { postSignUp, postUserLogin, generateAccessToken };
+
+module.exports = { postSignUp, postUserLogin, generateAccessToken ,getAllUsers};

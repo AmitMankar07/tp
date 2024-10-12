@@ -13,6 +13,19 @@ const Charity = sequelize.define('charities', {
       type: Sequelize.STRING,
       allowNull: false
     },
+    email: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      unique: true
+    }, 
+    phoneNumber: {
+      type: Sequelize.INTEGER,
+      allowNull: true
+    }, 
+    password: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
     description: {
       type: Sequelize.TEXT
     },
@@ -22,18 +35,7 @@ const Charity = sequelize.define('charities', {
     // website: {
     //   type: Sequelize.STRING
     // },
-    email: {
-      type: Sequelize.STRING,
-      allowNull: false,
-      unique: true
-    },
-    phoneNumber: {
-      type: Sequelize.INTEGER,
-      allowNull: true
-    },
-    address: {
-      type: Sequelize.TEXT
-    },
+    
     approved: {
       type: Sequelize.BOOLEAN,
       defaultValue: false
