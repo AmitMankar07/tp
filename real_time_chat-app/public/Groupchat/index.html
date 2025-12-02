@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat App</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+   
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h1>Chat App</h1>
+            <div class="dropdown">
+            <button id="dropdown-button" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                Dropdown button
+              </button>
+              <div id="dropdown-menu" class="dropdown-menu">
+                <a class="dropdown-item" href="#">Group Members</a>
+                <a class="dropdown-item" href="#">Create Group</a>
+                <a class="dropdown-item" href="#">Add User to Group</a>
+                <a class="dropdown-item" href="#">Delete User </a>
+              </div>
+            </div>
+             <!-- <button id="create-group-button">Create Group</button>
+       -->
+            <button id="sign-out-button">Sign Out</button>
+            
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <!-- Messages will be displayed here -->
+        </div>
+        <div class="chat-input">
+            <input type="text" id="message-input" placeholder="Type your message...">
+            <button id="send-button">Send</button>
+        </div>
+    </div>
+    <div class="sidebar">
+        <div id="search-container">
+            <input type="text" id="search-input" placeholder="Search by name, email, or phone number">
+            <ul id="search-results"></ul>
+        </div>
+        <h2>My Groups</h2>
+        <ul id="group-list">
+            <!-- Group names will be dynamically added here -->
+        </ul>
+    </div>
+    
+    <div id="create-group-modal" class="modal" hidden>
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Create Group</h2>
+            <form id="create-group-form">
+                <label for="group-name">Group Name:</label>
+                <input type="text" id="group-name" name="group-name" required>
+                <label for="invite-users">Invite Users:</label>
+                <input type="text" id="invite-users" name="invite-users" placeholder="Search or enter email/username" required>
+                <!-- Display search results or selected users here -->
+                <button type="submit">Create Group</button>
+            </form>
+        </div>
+    </div>
+   
+   
+
+    <!-- <script src="group.js"></script> -->
+    <script src="src.js"></script>
+    </body>
+</html>
