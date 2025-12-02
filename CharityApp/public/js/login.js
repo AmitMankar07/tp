@@ -113,7 +113,7 @@ charityLoginForm.addEventListener('submit', async (e) => {
             charityEmail,
             charityPassword
         });
-        conslo
+        
         const data = await response.data;
 
         if (data.success) {
