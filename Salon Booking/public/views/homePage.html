@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salon Management Dashboard</title>
+    <link rel="stylesheet" href="../css/homePage.css">
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <header>
+        <h1>Salon Admin Dashboard</h1>
+        <nav>
+            <ul>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#staff">Staff</a></li>
+                <li><a href="#appointments">Appointments</a></li>
+                <li><a href="#notifications">Notifications</a></li>
+                <li><a href="#reviews">Revieww</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="services">
+            <h2>Manage Services</h2>
+            <form id="serviceForm">
+                <input type="text" id="serviceName" placeholder="Service Name" required>
+                <input type="text" id="serviceDescription" placeholder="Service Description" required>
+                <input type="number" id="servicePrice" placeholder="Service Price" required>
+                <button type="submit">Add Service</button>
+            </form>
+            <div id="serviceList"></div>
+        </section>
+
+        <section id="staff">
+            <h2>Manage Staff</h2>
+            <form id="staffForm">
+                <input type="text" id="staffName" placeholder="Staff Name" required>
+                <input type="text" id="staffSkills" placeholder="Staff Skills" required>
+                <button type="submit">Add Staff</button>
+            </form>
+            <div id="staffList"></div>
+        </section>
+
+        <section id="appointments">
+            <h2>Manage Appointments</h2>
+            <form id="appointmentForm">
+                <input type="text" id="customerName" placeholder="Customer Name" required>
+                <input type="text" id="appointmentService" placeholder="Service" required>
+                <input type="datetime-local" id="appointmentTime" required>
+                <button type="submit">Book Appointment</button>
+            </form>
+            <div id="appointmentList"></div>
+        </section>
+
+        <section id="notifications">
+            <h2>Notifications</h2>
+            <div id="notificationList"></div>
+        </section>
+
+        <section id="reviews">
+            <h2>Customer Reviews</h2>
+            <div id="reviewList"></div>
+        </section>
+    </main>
+
+    <script src="../js/homepage.js"></script>
+</body>
+</html>

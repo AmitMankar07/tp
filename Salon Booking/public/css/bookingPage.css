@@ -1,0 +1,71 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+section {
+    background-color: #f7f7f7;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#available-slots {
+    width: 50%;
+}
+
+#slot-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#slot-list li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+#slot-list li:last-child {
+    border-bottom: none;
+}
+
+#booking-form {
+    width: 50%;
+}
+
+#booking-form label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+#booking-form input, #booking-form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+}
+
+#booking-form button {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#booking-confirmation {
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
