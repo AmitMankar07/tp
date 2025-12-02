@@ -1,0 +1,15 @@
+*{
+    margin: 0px;
+    padding: 0;
+}
+body{
+background-image: url("/images/bg_image.webp");
+background-repeat:no-repeat;
+background-size: 100%;
+}
+#nav-bar{
+    background-color: black;
+}
+#quickfood_logo{
+    margin: 0px 100px;
+}
