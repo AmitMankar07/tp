@@ -155,20 +155,38 @@ exports.groupMembers = async (req, res, next) => {
   try {
     const groupName = req.params.groupName;
     const group = await Group.findOne({ where: { name: groupName } });
+    if (!group) {
+      return res.status(404).json({ error: "Group not found" });
+    }
     const userGroup = await UserGroup.findAll({
       where: { groupId: group.dataValues.id },
     });
+    console.log("userGrou:",userGroup)
+
+     // Extract unique userIds to avoid duplicates
+    const uniqueUserIds = [...new Set(userGroup.map(ug => ug.dataValues.userId))];
 
     const users = [];
 
-    await Promise.all(
-      userGroup.map(async (user) => {
-        const res = await User.findOne({
-          where: { id: user.dataValues.userId },
+    // await Promise.all(
+    //   userGroup.map(async (user) => {
+    //     const res = await User.findOne({
+    //       where: { id: user.dataValues.userId },
+    //     });
+    //     users.push(res);
+    //   })
+    // );
+     await Promise.all(
+      uniqueUserIds.map(async (userId) => {
+        const user = await User.findOne({
+          where: { id: userId },
         });
-        users.push(res);
+        if (user) {
+          users.push(user);
+        }
       })
     );
+      console.log("users:",users)
     res.status(200).json({ users: users });
   } catch (error) {
     console.log(error);

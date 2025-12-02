@@ -12,6 +12,9 @@ const UserGroup = sequelize.define("UserGroup", {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
   },
+     
+   
+    
 });
 
 module.exports = UserGroup;
