@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service & Staff Management</title>
+    <link rel="stylesheet" href="./css/service.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Service Management -->
+        <h1>Service Management</h1>
+        <form id="serviceForm">
+            <input type="text" id="name" placeholder="Service Name" required>
+            <textarea id="description" placeholder="Description" required></textarea>
+            <input type="number" id="duration" placeholder="Duration (minutes)" required>
+            <input type="number" id="price" placeholder="Price" required>
+            <label>
+                <input type="checkbox" id="available" checked /> Available
+            </label>
+            <button type="submit">Add Service</button>
+        </form>
+
+        <div id="serviceList"></div>
+
+        <!-- Staff Management -->
+        <h1>Staff Management</h1>
+        <h2>Add Staff</h2>
+        <form id="staffForm">
+            <input type="text" id="staffName" placeholder="Name" required><br>
+            <input type="text" id="specialization" placeholder="Specialization" required><br>
+            <input type="text" id="availability" placeholder="Availability (e.g. 9am-5pm)" required><br>
+            <button type="submit">Add Staff</button>
+        </form>
+
+        <h2>Assign Services to Staff</h2>
+        <form id="assignServicesForm">
+            <select id="staffSelect"></select>
+            <select id="serviceSelect" multiple></select>
+            <button type="submit">Assign Services</button>
+        </form>
+        <h2>Assignments</h2>
+<div id="assignmentList"></div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="./js/script.js"></script>
+</body>
+</html>
