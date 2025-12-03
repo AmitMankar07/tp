@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Service & Staff Management</title>
+        <link rel="stylesheet" href="./css/service.css"> <!-- Link to CSS file -->
+        <script>
+            function showSection(sectionId) {
+                document.querySelectorAll('.section').forEach(section => {
+                    section.style.display = 'none';
+                });
+                document.getElementById(sectionId).style.display = 'block';
+            }
+            function showAdminDashboard() {
+            // Show all sections related to the admin dashboard
+            const sections = ['admin'];
+            sections.forEach(section => {
+                document.getElementById(section).style.display = 'block';
+            });
+        }
+        </script>
+    </head>
+    <body>
+        <!-- Navigation Bar -->
+        <nav class="navbar">
+            <div class="container">
+                <h1 class="logo">Salon Management</h1>
+                <ul class="nav-links">
+                    <li><a href="#" onclick="showSection('home')">Home</a></li>
+                    <li><a href="#" onclick="showSection('services')">Services</a></li>
+                    <li><a href="#" onclick="showSection('staff')">Staff Management</a></li>
+                    <li><a href="#" onclick="showSection('assignments')">Assignments</a></li>
+                    
+                <li><a href="#" onclick="showAdminDashboard()">Admin Dashboard</a></li>
+                    <li><a href="#" onclick="showSection('reviews')">Customer Reviews</a></li>
+                    <!-- <li><a href="#" onclick="showSection('userProfile')">User Profile</a></li> -->
+                    <!-- <li><a href="userProfile.html">User Profile</a></li> -->
+                    <li><a href="login.html">Log Out</a></li>
+                </ul>
+            </div>
+        </nav>
+    
+        <div class="container">
+            <div id="home" class="section"> <h1>Welcome to Salon Management</h1> </div>
+            
+            <div id="services" class="section" style="display:none;">
+                <h1>Service Management</h1>
+                <form id="serviceForm">
+                    <input type="text" id="name" placeholder="Service Name" required>
+                    <textarea id="description" placeholder="Description" required></textarea>
+                    <input type="number" id="duration" placeholder="Duration (minutes)" required>
+                    <input type="number" id="price" placeholder="Price" required>
+                    <label>
+                        <input type="checkbox" id="available" checked /> Available
+                    </label>
+                    <button type="submit">Add Service</button>
+                </form>
+                <div id="serviceList"></div>
+            </div>
+    
+            <div id="staff" class="section" style="display:none;">
+                <h1>Staff Management</h1>
+                <h2>Add Staff</h2>
+                <form id="staffForm">
+                    <input type="text" id="staffName" placeholder="Name" required>
+                    <input type="text" id="specialization" placeholder="Specialization" required>
+                    <input type="text" id="availability" placeholder="Availability (e.g. 9am-5pm)" required>
+                    <button type="submit">Add Staff</button>
+                </form>
+                <!-- Staff List Section -->
+    <div id="staffList" class="mt-6"></div>
+            </div>
+    
+            <div id="assignments" class="section" style="display:none;">
+                <h2>Assign Services to Staff</h2>
+                <form id="assignServicesForm">
+                    <select id="staffSelect"></select>
+                    <select id="serviceSelect" multiple></select>
+                    <button type="submit">Assign Services</button>
+                </form>
+                <h2>Assignments</h2>
+                <div id="assignmentList"></div>
+            </div>
+            
+            <div id="reviews" class="section" style="display:none;">
+                <h2>Customer Reviews</h2>
+                <ul id="reviewsList"></ul>
+            </div>
+            
+            <div id="admin" class="section" style="display:none;">
+                <h1>Admin Dashboard</h1>
+                <h2>Statistics</h2>
+                <div id="statistics">
+                    <!-- <p>Total Services: <span id="totalServices">0</span></p> -->
+                    <p>Total Staff: <span id="totalStaff">0</span></p>
+                    <p>Total Assignments: <span id="totalAssignments">0</span></p>
+                    <p>Total Reviews: <span id="totalReviews">0</span></p>
+                </div>
+                <h2>Manage Users</h2>
+                <button id="manageUsersButton">Manage Users</button>
+                <div id="userManagement" style="display:none;">
+                    <h3>User List</h3>
+                    <ul id="userList"></ul>
+                </div>
+            </div>
+            <!-- <div id="userProfile" class="section" style="display:none;">
+                <h2>User Profile</h2>
+            </div> -->
+        </div>
+    
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="./js/script.js"></script>
+    </body>
+    </html>
+    

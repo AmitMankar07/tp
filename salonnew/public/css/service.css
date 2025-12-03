@@ -1,0 +1,304 @@
+/* Reset default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #F9FAFB 0%, #E5E7EB 100%);
+    color: #1F2937;
+    line-height: 1.6;
+}
+
+/* Navigation Bar */
+.navbar {
+    background: linear-gradient(to right, #FF6F61, #6B7280);
+    color: white;
+    padding: 15px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    align-items: center; /* Vertically centers the items */
+    margin: 0; /* Removes any default margin */
+    padding: 0; /* Removes any default padding */
+}
+
+.nav-links li {
+    margin-left: 25px; /* Consistent horizontal spacing */
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 12px 18px; /* Increased padding for balance */
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    display: inline-block; /* Ensures consistent sizing */
+    line-height: 1; /* Normalizes line height for alignment */
+}
+
+.nav-links a:hover {
+    background-color: #FFD700;
+    color: #1F2937;
+    transform: translateY(-2px);
+}
+
+/* Section Styles */
+.section {
+    display: none; /* Hidden by default */
+    background: white;
+    padding: 25px;
+    margin: 30px 0;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.section:hover {
+    transform: translateY(-5px);
+}
+
+.section h1 {
+    color: #FF6F61;
+    font-size: 32px;
+    margin-bottom: 20px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.section h2 {
+    color: #6B7280;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+/* Forms */
+form {
+    background: #F9FAFB;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 2px solid #E5E7EB;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: #FF6F61;
+    box-shadow: 0 0 8px rgba(255, 111, 97, 0.3);
+    outline: none;
+}
+
+textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+select[multiple] {
+    height: 150px;
+}
+
+button {
+    background: #FFD700;
+    color: #1F2937;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+button:hover {
+    background: #FFC107;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Service List */
+#serviceList {
+    margin-top: 20px;
+}
+
+#serviceList .service {
+    background: #F9FAFB;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border-left: 4px solid #FF6F61;
+    transition: transform 0.3s ease;
+}
+
+#serviceList .service:hover {
+    transform: translateX(5px);
+}
+
+/* Staff List */
+#staffList {
+    margin-top: 20px;
+}
+
+#staffList .staff {
+    background: #F9FAFB;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border-left: 4px solid #FF6F61;
+    transition: transform 0.3s ease;
+}
+
+#staffList .staff:hover {
+    transform: translateX(5px);
+}
+
+/* Assignments */
+#assignmentList {
+    margin-top: 20px;
+}
+
+#assignmentList .assignment {
+    background: #F9FAFB;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border-left: 4px solid #FF6F61;
+    transition: transform 0.3s ease;
+}
+
+#assignmentList .assignment:hover {
+    transform: translateX(5px);
+}
+
+/* Reviews */
+#reviewsList {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+#reviewsList li {
+    background: #F9FAFB;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border-left: 4px solid #FF6F61;
+    transition: transform 0.3s ease;
+}
+
+#reviewsList li:hover {
+    transform: translateX(5px);
+}
+
+/* Admin Dashboard */
+#statistics {
+    background: #F9FAFB;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+}
+
+#statistics p {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+#statistics span {
+    font-weight: 600;
+    color: #FF6F61;
+}
+
+#manageUsersButton {
+    background: #FF6F61;
+    color: white;
+}
+
+#manageUsersButton:hover {
+    background: #F05244;
+}
+
+#userList {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+#userList li {
+    background: #F9FAFB;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border-left: 4px solid #FF6F61;
+    transition: transform 0.3s ease;
+}
+
+#userList li:hover {
+    transform: translateX(5px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .navbar .container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .nav-links {
+        margin-top: 15px;
+        flex-wrap: wrap; /* Allows wrapping if needed */
+        justify-content: center;
+    }
+
+    .nav-links li {
+        margin: 10px 10px; /* Adjusted for better spacing */
+    }
+
+    .section {
+        padding: 20px;
+        margin: 15px 0;
+    }
+
+    .container {
+        padding: 15px;
+    }
+}

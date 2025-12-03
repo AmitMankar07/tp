@@ -1,0 +1,90 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salon Appointment System</title>
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+<body>
+    <div id="app">
+        <h1>Welcome to the Salon Appointment System</h1>
+         <a href="signup.html">Sign Up</a> -->
+        <!-- <a href="./userProfile.html">User Profile</a>
+        <a href="login.html">LogOut</a>
+    </div>
+    <div id="services" style="display: none;">
+        <h2>Available Services</h2>
+        <ul id="servicesList">
+            <li> -->
+                <!-- <span>Service Name</span>
+                <button class="book-service-btn" data-service='{"id": 1, "name": "Haircut", "duration": "30 mins", "price": 500, "description": "A stylish haircut."}'>Book Service</button>
+            </li>
+        </ul>
+    </div>
+    <div id="reviewForm" style="display: none;"> -->
+        <!-- <h2>Leave a Review</h2>
+        <form onsubmit="submitReview(event)">
+            <textarea id="reviewText" placeholder="Write your review here..." required></textarea><br>
+            <button type="submit">Submit Review</button>
+        </form>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="../js/index.js"></script>
+</body> -->
+<!-- </html>   -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salon Appointment System</title>
+    <link rel="stylesheet" href="./css/index.css"> <!-- Link to your CSS file -->
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <h1 class="logo">Salon Appointment System</h1>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <!-- <li><a href="services.html">Services</a></li> -->
+                <li><a href="userProfile.html">User  Profile</a></li>
+                <!-- <li><a href="reviews.html">Leave a Review</a></li> -->
+                <li><a href="login.html">Log Out</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div id="app" class="content">
+        <h2>Welcome to the Salon Appointment System</h2>
+        <div id="services" style="display: none;">
+            <h3>Available Services</h3>
+            <ul id="servicesList">
+                <li>
+                    <span>Service Name</span>
+                    <button class="book-service-btn" data-service='{"id": 1, "name": "Haircut", "duration": "30 mins", "price": 500, "description": "A stylish haircut."}'>Book Service</button>
+                </li>
+            </ul>
+        </div>
+        <div id="userBookingsSection">
+            <h2>Your Booked Services</h2>
+            <!-- Booked services will be displayed here -->
+        </div>
+        <div id="reviewForm" style="display: none;">
+            <h3>Leave a Review</h3>
+            <form onsubmit="submitReview(event)">
+                <textarea id="reviewText" placeholder="Write your review here..." required></textarea><br>
+                <button type="submit">Submit Review</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="../js/index.js"></script>
+</body>
+</html>

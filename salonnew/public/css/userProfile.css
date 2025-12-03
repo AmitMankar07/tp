@@ -1,0 +1,221 @@
+/* Reset default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #F9FAFB 0%, #E5E7EB 100%);
+    color: #1F2937;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+/* Back Button */
+.back-button {
+    display: inline-block;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    background: #6B7280;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.back-button:hover {
+    background: #4B5563;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Headings */
+h1 {
+    color: #FF6F61;
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Profile Info Section */
+#profile-info {
+    max-width: 600px;
+    margin: 0 auto 30px;
+    padding: 25px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+#profile-info:hover {
+    transform: translateY(-5px);
+}
+
+#profile-name, #profile-email {
+    font-size: 18px;
+    margin: 10px 0;
+    color: #1F2937;
+}
+
+#profile-name::before {
+    content: "Name: ";
+    font-weight: 600;
+    color: #6B7280;
+}
+
+#profile-email::before {
+    content: "Email: ";
+    font-weight: 600;
+    color: #6B7280;
+}
+
+#update-profile-btn {
+    background: #FFD700;
+    color: #1F2937;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin-top: 15px;
+}
+
+#update-profile-btn:hover {
+    background: #FFC107;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Horizontal Rule */
+hr {
+    border: none;
+    height: 2px;
+    background: #E5E7EB;
+    margin: 30px 0;
+}
+
+/* Donation History */
+#get-donation-history-btn {
+    background: #FF6F61;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 200px;
+    margin: 0 auto;
+    display: block;
+}
+
+#get-donation-history-btn:hover {
+    background: #F05244;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+#donation-history-list {
+    list-style: none;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 0;
+}
+
+#donation-history-list li {
+    background: white;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    border-left: 4px solid #FF6F61;
+    transition: transform 0.3s ease;
+}
+
+#donation-history-list li:hover {
+    transform: translateX(5px);
+}
+
+/* Error Message */
+#error-message {
+    color: #FF6F61;
+    text-align: center;
+    font-size: 16px;
+    margin: 15px 0;
+}
+
+/* Update Profile Form */
+#update-profile-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 25px;
+    background: #F9FAFB;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+}
+
+#update-profile-form label {
+    display: block;
+    font-size: 16px;
+    color: #6B7280;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+#update-profile-form input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 2px solid #E5E7EB;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#update-profile-form input:focus {
+    border-color: #FF6F61;
+    box-shadow: 0 0 8px rgba(255, 111, 97, 0.3);
+    outline: none;
+}
+
+#update-profile-form button {
+    background: #FFD700;
+    color: #1F2937;
+    width: 100%;
+}
+
+#update-profile-form button:hover {
+    background: #FFC107;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    #profile-info, #update-profile-form {
+        padding: 20px;
+    }
+
+    #get-donation-history-btn {
+        width: 100%;
+    }
+}

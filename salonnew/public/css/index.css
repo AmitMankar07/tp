@@ -1,0 +1,262 @@
+/* Reset default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #FFEDEB 0%, #ECEFF1 100%); /* Lighter, similar but distinct */
+    color: #1F2937;
+    line-height: 1.6;
+}
+
+/* Navigation Bar */
+.navbar {
+    background: linear-gradient(to right, #FF6F61, #6B7280); /* Unchanged */
+    color: white;
+    padding: 15px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+
+.nav-links li {
+    margin-left: 25px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 10px 15px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+
+.nav-links a:hover {
+    background-color: #FFD700;
+    color: #1F2937;
+    transform: translateY(-2px);
+}
+
+/* Content Section */
+.content {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 25px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.content:hover {
+    transform: translateY(-5px);
+}
+
+h2 {
+    color: #FF6F61;
+    font-size: 32px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+h3 {
+    color: #6B7280;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+h4 {
+    color: #1F2937;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+/* Form Elements */
+input, textarea, select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 2px solid #E5E7EB;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: #FF6F61;
+    box-shadow: 0 0 8px rgba(255, 111, 97, 0.3);
+    outline: none;
+}
+
+textarea {
+    height: 120px;
+    resize: vertical;
+}
+
+button {
+    background: #FFD700;
+    color: #1F2937;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    background: #FFC107;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+button:disabled {
+    background: #D1D5DB;
+    color: #6B7280;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Services List */
+#servicesList {
+    list-style: none;
+    padding: 0;
+}
+
+#servicesList li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: #F9FAFB;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+}
+
+#servicesList li:hover {
+    background: #E5E7EB;
+}
+
+.book-service-btn {
+    background: #FF6F61;
+    padding: 8px 15px;
+}
+
+.book-service-btn:hover {
+    background: #F05244;
+}
+
+/* Reviews Section */
+#reviewsSection {
+    margin-top: 30px;
+}
+
+#serviceReviewSelect {
+    width: 70%;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+#fetchReviewsBtn {
+    width: 25%;
+    padding: 12px;
+}
+
+#reviews {
+    margin-top: 20px;
+    padding: 15px;
+    background: #F9FAFB;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+#reviewsList {
+    list-style: none;
+    padding: 0;
+}
+
+#reviewsList li {
+    padding: 15px;
+    background: white;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    border-left: 4px solid #FF6F61;
+    transition: transform 0.3s ease;
+}
+
+#reviewsList li:hover {
+    transform: translateX(5px);
+}
+
+/* Review Form */
+#reviewForm {
+    margin-top: 30px;
+}
+
+#reviewForm form {
+    background: #F9FAFB;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+#reviewServiceSelect {
+    margin-bottom: 15px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .nav-links {
+        margin-top: 15px;
+    }
+
+    .nav-links li {
+        margin: 10px 0;
+    }
+
+    #serviceReviewSelect, #fetchReviewsBtn {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .content {
+        margin: 15px;
+        padding: 15px;
+    }
+}
