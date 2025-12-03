@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salon Appointment System</title>
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+<body>
+    <div id="app">
+        <h1>Welcome to the Salon Appointment System</h1>
+        <a href="signup.html">Sign Up</a>
+        <a href="login.html">Login</a>
+    </div>
+    <div id="services" style="display: none;">
+        <h2>Available Services</h2>
+        <ul id="servicesList"></ul>
+    </div>
+    <div id="reviewForm" style="display: none;">
+        <h2>Leave a Review</h2>
+        <form onsubmit="submitReview(event)">
+            <textarea id="reviewText" placeholder="Write your review here..." required></textarea><br>
+            <button type="submit">Submit Review</button>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    
+    <script src="../js/index.js"></script>
+</body>
+</html>
